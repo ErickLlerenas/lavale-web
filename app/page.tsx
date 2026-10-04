@@ -22,12 +22,16 @@ import LandingNav from "@/components/LandingNav";
 import {
   brandName,
   exampleKiloPrice,
+  isPublished,
   kilosToPay,
   mxn,
   plans,
   siteDescription,
   siteUrl,
+  testerProgram,
 } from "@/lib/site";
+
+const recruiting = !isPublished && testerProgram.open;
 
 const beforeAfter = [
   {
@@ -181,6 +185,12 @@ export default function Home() {
                 cuenta.
               </p>
               <GetApp />
+              {recruiting && (
+                <a className="tester-pill" href="/probar">
+                  <strong>¿Tienes lavandería?</strong> Pruébala{" "}
+                  {testerProgram.days} días y quédatela gratis de por vida →
+                </a>
+              )}
             </div>
             <div className="hero-visual">
               <HeroPhone />
@@ -365,6 +375,11 @@ export default function Home() {
                 recibe tu primer pedido. Sin cuenta y sin internet.
               </p>
               <GetApp align="center" />
+              {recruiting && (
+                <a className="btn btn-light cta-tester" href="/probar">
+                  Quiero probarla gratis
+                </a>
+              )}
             </div>
           </div>
         </section>

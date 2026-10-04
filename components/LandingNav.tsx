@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { isPublished, testerProgram } from "@/lib/site";
 
 const links = [
-  { href: "#funciones", label: "Funciones" },
-  { href: "#como-funciona", label: "Cómo funciona" },
-  { href: "#precios", label: "Precios" },
-  { href: "#preguntas", label: "Preguntas" },
+  { href: "/#funciones", label: "Funciones" },
+  { href: "/#como-funciona", label: "Cómo funciona" },
+  { href: "/#precios", label: "Precios" },
+  { href: "/#preguntas", label: "Preguntas" },
 ];
 
 /// Transparente sobre el hero y sólida al hacer scroll.
@@ -34,9 +35,15 @@ export default function LandingNav() {
             </a>
           ))}
         </div>
-        <a className="nav-cta" href="#descargar">
-          Descargar
-        </a>
+        {!isPublished && testerProgram.open ? (
+          <a className="nav-cta" href="/probar">
+            Probar gratis
+          </a>
+        ) : (
+          <a className="nav-cta" href="/#descargar">
+            Descargar
+          </a>
+        )}
       </nav>
     </header>
   );

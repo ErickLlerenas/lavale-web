@@ -1318,3 +1318,250 @@ a.store-badge:hover {
     opacity: 1;
   }
 }
+
+
+/* ---------- Programa de testers (/probar) ---------- */
+.tester-pill {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.tester-pill:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.tester-pill strong {
+  color: var(--highlight);
+}
+.cta-tester {
+  margin-top: 18px;
+}
+.tester-hero {
+  min-height: auto;
+  padding: 128px 0 96px;
+}
+.tester-hero-content {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+  align-items: start;
+}
+.tester-steps {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tester-steps li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  text-align: left;
+}
+.tester-steps .feature-icon {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--highlight);
+}
+.tester-steps strong {
+  display: block;
+  color: #fff;
+  font-size: 17px;
+}
+.tester-steps li > span:last-child {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.45;
+}
+.tester-card {
+  display: grid;
+  gap: 16px;
+  padding: 28px;
+  border-radius: 24px;
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow-lg);
+  text-align: left;
+}
+.tester-card h2 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+.tester-card p {
+  margin: 0;
+}
+.t-field {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.t-field em {
+  color: var(--ink-soft);
+  font-style: normal;
+  font-weight: 500;
+}
+.t-field input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+}
+.t-field input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+.t-field-hint {
+  color: #b45309;
+  font-weight: 500;
+}
+.t-field-error {
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 600;
+}
+.t-field-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.btn-block {
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+}
+.btn-block:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+.tester-fine {
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.tester-fine a {
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+.tester-done {
+  text-align: center;
+  justify-items: center;
+}
+.tester-done-icon {
+  color: var(--primary);
+}
+.tester-next {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: next;
+  text-align: left;
+}
+.tester-next li {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  counter-increment: next;
+}
+.tester-next li > span::before {
+  content: counter(next) ". ";
+  font-weight: 800;
+  color: var(--primary);
+}
+.tester-next .btn {
+  padding: 12px 18px;
+  font-size: 15px;
+}
+.tester-next .btn-light {
+  border: 1.5px solid var(--border);
+}
+.tester-next em {
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+/* ---------- Aviso de privacidad ---------- */
+.legal {
+  padding: 120px 0 72px;
+  background: var(--card);
+}
+.legal h1 {
+  margin: 0 0 6px;
+  font-size: clamp(32px, 5vw, 44px);
+  letter-spacing: -0.03em;
+}
+.legal h2 {
+  margin: 36px 0 10px;
+  font-size: 20px;
+}
+.legal p,
+.legal li {
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+.legal li + li {
+  margin-top: 10px;
+}
+.legal a {
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+.legal-updated {
+  margin: 0 0 28px;
+  font-size: 14px;
+}
+
+@media (max-width: 860px) {
+  .tester-hero {
+    padding: 100px 0 56px;
+  }
+  .tester-hero-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  /* En el teléfono el formulario va justo después del titular. */
+  .tester-hero-content .hero-copy {
+    display: contents;
+  }
+  .tester-hero-content .eyebrow {
+    justify-self: center;
+    margin: 0;
+  }
+  .tester-hero-content h1,
+  .tester-hero-content .hero-lead {
+    margin: 0;
+  }
+  .tester-form-wrap {
+    order: 4;
+  }
+  .tester-steps {
+    order: 5;
+    margin-top: 8px;
+  }
+  .tester-card {
+    padding: 22px;
+  }
+}

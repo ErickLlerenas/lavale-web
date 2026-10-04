@@ -19,3 +19,19 @@ yarn build      # lo mismo que corre Vercel
 ## Vercel
 
 Importa el repo en Vercel (framework: Next.js, sin configuración extra). Cuando tengas dominio, agrega la variable `NEXT_PUBLIC_SITE_URL` (p. ej. `https://lavale.mx`) para canonical, sitemap y Open Graph.
+
+## Prueba cerrada de Google Play (`/probar`)
+
+Página para anuncios: el tester deja su Gmail y después ve los botones para unirse al grupo y a la prueba. Al día 14, a quien siga inscrito se le manda un código de promoción de Play para el producto «De por vida».
+
+Variables en Vercel:
+
+| Variable | Qué es |
+| --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Proyecto «Lávale». La tabla `tester_signups` solo acepta inserciones (migración `002_tester_signups.sql` en el repo de la app). |
+| `NEXT_PUBLIC_TESTER_GROUP_URL` | Grupo de Google dado de alta como lista de testers en Play Console. |
+| `NEXT_PUBLIC_PLAY_TEST_URL` | Enlace de inscripción de la prueba cerrada. |
+| `NEXT_PUBLIC_TESTER_PROGRAM=closed` | Cierra la inscripción y quita los botones «Probar gratis». |
+| `NEXT_PUBLIC_PRIVACY_OWNER` / `NEXT_PUBLIC_PRIVACY_EMAIL` | Responsable y correo del aviso de privacidad (`/privacidad`). |
+
+Usa `?utm_source=facebook&utm_campaign=…` en los anuncios: se guarda en la columna `source`.
