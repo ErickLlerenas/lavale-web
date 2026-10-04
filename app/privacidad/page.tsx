@@ -91,7 +91,23 @@ export default function Privacidad() {
             {contact}. Te respondemos en un máximo de 20 días hábiles.
           </p>
 
-          <h2>6. Cambios a este aviso</h2>
+          <h2 id="borrar-datos">6. Cómo borrar tus datos</h2>
+          <p>
+            Lávale no tiene cuentas. Para pedir que borremos los datos que sí
+            salen de tu teléfono (conversaciones del chat de soporte, tu
+            inscripción a la prueba e historial de compras ligado a tu
+            identificador anónimo), {contact} con el asunto «Borrar mis datos» e
+            indica el nombre de tu negocio o tu correo. Los borramos en un máximo
+            de 20 días hábiles. Las compras quedan registradas en Google Play o
+            App Store según sus propias reglas.
+          </p>
+          <p>
+            Lo que guardas en la app (pedidos, clientes, cobros) se borra al
+            desinstalar Lávale o al borrar los datos de la app en los ajustes de
+            tu teléfono.
+          </p>
+
+          <h2>7. Cambios a este aviso</h2>
           <p>
             Si cambia algo importante, actualizaremos esta página y la fecha de
             arriba.
