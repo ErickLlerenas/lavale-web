@@ -3,7 +3,7 @@
 /// aparecen solos en lugar de "Próximamente".
 
 export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://lavale-web.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://lavaleapp.vercel.app";
 
 export const brandName = "Lávale";
 export const brandNamePlain = "Lavale";
