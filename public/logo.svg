@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>Lávale — lavadora y burbujas</title>
+  <desc>Ícono original de Lávale: fondo verde petróleo, lavadora blanca y agua verde.</desc>
+  <defs>
+    <clipPath id="door-water">
+      <circle cx="512" cy="560" r="128" />
+    </clipPath>
+  </defs>
+  <rect width="1024" height="1024" fill="#0F766E" />
+  <rect x="272" y="222" width="480" height="594" rx="62" fill="#FFFFFF" />
+  <rect x="318" y="274" width="178" height="24" rx="12" fill="#12574F" />
+  <circle cx="648" cy="286" r="14" fill="#0F766E" />
+  <circle cx="697" cy="286" r="14" fill="#0F766E" />
+  <rect x="312" y="330" width="400" height="5" rx="2.5" fill="#DAEDE8" />
+  <circle cx="512" cy="560" r="170" fill="#12574F" />
+  <circle cx="512" cy="560" r="128" fill="#C7F4E9" />
+  <g clip-path="url(#door-water)">
+    <ellipse cx="438" cy="670" rx="188" ry="114" fill="#42C6AE" />
+    <ellipse cx="621" cy="681" rx="186" ry="124" fill="#24AF99" />
+  </g>
+  <circle cx="468" cy="505" r="17" fill="#FFFFFF" />
+  <circle cx="574" cy="523" r="10" fill="#FFFFFF" />
+  <rect x="349" y="762" width="62" height="12" rx="6" fill="#DAEDE8" />
+  <rect x="613" y="762" width="62" height="12" rx="6" fill="#DAEDE8" />
+  <circle cx="761" cy="191" r="43" fill="#C7F4E9" stroke="#FFFFFF" stroke-width="12" />
+  <circle cx="821" cy="286" r="21" fill="#C7F4E9" stroke="#FFFFFF" stroke-width="9" />
+</svg>
