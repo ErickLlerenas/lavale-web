@@ -49,10 +49,13 @@ export default function Privacidad() {
           <h2>2. Datos que sí salen de tu teléfono</h2>
           <ul>
             <li>
-              <strong>Estadísticas anónimas (opcional).</strong> Solo si lo
-              activas en Ajustes: qué pantallas y acciones se usan (por ejemplo,
-              «pedido creado»), la versión de la app y el sistema. Sin nombres,
-              teléfonos ni importes. Se usan para mejorar la app.
+              <strong>Estadísticas anónimas (opcional).</strong> Qué pantallas
+              y acciones se usan (por ejemplo, «pedido creado»), la versión de
+              la app y el sistema, con un identificador al azar que no se
+              relaciona contigo. Sin nombres, teléfonos ni importes. Se usan para
+              mejorar la app. En la versión de prueba (testers) vienen
+              encendidas; en las demás solo si las activas. Las puedes apagar
+              cuando quieras en Ajustes → «Ayudar a mejorar Lávale».
             </li>
             <li>
               <strong>Chat de soporte.</strong> Si nos escribes desde la app, el
