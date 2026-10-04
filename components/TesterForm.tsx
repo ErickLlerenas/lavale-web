@@ -52,8 +52,8 @@ export default function TesterForm() {
       const response = await fetch(`${signupApi.url}/rest/v1/tester_signups`, {
         method: "POST",
         headers: {
+          // Llave publicable (sb_publishable_…): solo va en `apikey`.
           apikey: signupApi.anonKey,
-          Authorization: `Bearer ${signupApi.anonKey}`,
           "Content-Type": "application/json",
           Prefer: "return=minimal",
         },

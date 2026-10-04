@@ -28,7 +28,7 @@ Variables en Vercel:
 
 | Variable | Qué es |
 | --- | --- |
-| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Proyecto «Lávale». La tabla `tester_signups` solo acepta inserciones (migración `002_tester_signups.sql` en el repo de la app). |
+| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Proyecto «Lávale» (`https://ljabtkihezrbwslcogae.supabase.co` y su llave publicable `sb_publishable_…`). La tabla `tester_signups` solo acepta inserciones (migración `002_tester_signups.sql` en el repo de la app). |
 | `NEXT_PUBLIC_TESTER_GROUP_URL` | Grupo de Google dado de alta como lista de testers en Play Console. |
 | `NEXT_PUBLIC_PLAY_TEST_URL` | Enlace de inscripción de la prueba cerrada. |
 | `NEXT_PUBLIC_TESTER_PROGRAM=closed` | Cierra la inscripción y quita los botones «Probar gratis». |
