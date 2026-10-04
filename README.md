@@ -10,8 +10,8 @@ yarn build      # lo mismo que corre Vercel
 
 ## Dónde se cambia cada cosa
 
-- `lib/site.ts`: WhatsApp de contacto, enlaces de tiendas, precios (espejo de `plan_catalog.dart` en la app) y URL del sitio.
-- Cuando la app esté publicada, llena `stores.google` / `stores.apple` y los botones de descarga reemplazan el «Próximamente».
+- `lib/site.ts`: enlaces de tiendas, precios (espejo de `plan_catalog.dart` en la app) y URL del sitio.
+- Cuando la app esté publicada, llena `stores.google` / `stores.apple` y los botones dejan de decir «Próximamente» y llevan a la tienda.
 - `app/page.tsx`: textos y secciones. `components/HeroPhone.tsx`: demo animada del hero.
 - `app/globals.css`: paleta (espejo de `app_theme.dart`) y estilos.
 - La fuente (Plus Jakarta Sans, OFL) va incluida en `app/fonts`, así que el build no depende de Google Fonts.

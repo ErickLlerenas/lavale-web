@@ -27,7 +27,6 @@ import {
   plans,
   siteDescription,
   siteUrl,
-  whatsappLink,
 } from "@/lib/site";
 
 const beforeAfter = [
@@ -311,12 +310,7 @@ export default function Home() {
                     <li key={b}>{b}</li>
                   ))}
                 </ul>
-                <a
-                  className="btn btn-primary"
-                  href={whatsappLink("Hola, quiero probar Lávale gratis en mi lavandería.")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a className="btn btn-primary" href="#descargar">
                   Empezar mis {plans.trialDays} días gratis
                 </a>
               </div>
@@ -332,13 +326,8 @@ export default function Home() {
                     <li key={b}>{b}</li>
                   ))}
                 </ul>
-                <a
-                  className="btn btn-light"
-                  href={whatsappLink("Hola, me interesa Lávale de por vida para mi lavandería.")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Quiero Lávale de por vida
+                <a className="btn btn-light" href="#descargar">
+                  Obtener de por vida
                 </a>
               </div>
             </div>
@@ -361,7 +350,7 @@ export default function Home() {
         </section>
 
         {/* ---------- CTA ---------- */}
-        <section className="cta-section">
+        <section id="descargar" className="cta-section">
           <div className="container">
             <div className="cta">
               <div className="bubbles" aria-hidden="true">
@@ -372,10 +361,10 @@ export default function Home() {
               <img src="/logo.svg" alt="" width="64" height="64" className="cta-logo" />
               <h2>Tu lavandería, en orden desde hoy.</h2>
               <p>
-                Lávale está en beta. Escríbenos y te ayudamos a recibir tu
-                primer pedido.
+                Descárgala, pon el nombre de tu negocio y tu precio por kilo, y
+                recibe tu primer pedido. Sin cuenta y sin internet.
               </p>
-              <GetApp tone="light" />
+              <GetApp align="center" />
             </div>
           </div>
         </section>

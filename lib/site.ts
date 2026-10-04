@@ -1,4 +1,4 @@
-/// Una sola fuente para marca, contacto, tiendas y precios de la landing.
+/// Una sola fuente para marca, tiendas y precios de la landing.
 /// Cuando la app esté publicada, llena `stores` y los botones de descarga
 /// aparecen solos en lugar de "Próximamente".
 
@@ -12,15 +12,6 @@ export const tagline = "Tickets para lavanderías";
 export const siteTitle = "Lávale · Tickets para lavanderías en México";
 export const siteDescription =
   "Lávale es la app para lavanderías por kilo: folio para cada bolsa, aviso por WhatsApp cuando la ropa está lista y corte de caja. Funciona sin internet y sin crear cuenta.";
-
-/// WhatsApp para pedir la beta (formato internacional, sin "+").
-export const whatsappNumber = "523331041584";
-
-export function whatsappLink(
-  message = "Hola, tengo una lavandería y quiero probar Lávale.",
-) {
-  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-}
 
 /// `null` mientras la app no esté publicada en esa tienda.
 export const stores: { google: string | null; apple: string | null } = {

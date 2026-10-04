@@ -1,5 +1,3 @@
-import { whatsappLink } from "@/lib/site";
-
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
@@ -13,9 +11,6 @@ export default function Footer() {
           <a href="#funciones">Funciones</a>
           <a href="#precios">Precios</a>
           <a href="#preguntas">Preguntas</a>
-          <a href={whatsappLink("Hola, tengo una duda sobre Lávale.")} target="_blank" rel="noopener noreferrer">
-            Contacto
-          </a>
         </nav>
       </div>
     </footer>

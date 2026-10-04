@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { whatsappLink } from "@/lib/site";
 
 const links = [
   { href: "#funciones", label: "Funciones" },
@@ -35,13 +34,8 @@ export default function LandingNav() {
             </a>
           ))}
         </div>
-        <a
-          className="nav-cta"
-          href={whatsappLink()}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Quiero probarla
+        <a className="nav-cta" href="#descargar">
+          Descargar
         </a>
       </nav>
     </header>
