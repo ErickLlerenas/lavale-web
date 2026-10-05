@@ -162,7 +162,7 @@ export default function TesterForm() {
           ? "Guardando…"
           : ios
             ? "Avísenme"
-            : "¡Quiero mi Lávale gratis!"}
+            : "¡Quiero probarla gratis!"}
       </button>
       <p className="tester-fine">
         {ios
