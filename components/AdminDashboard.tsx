@@ -65,6 +65,17 @@ type Dashboard = {
   daily: Daily[];
   installs: Install[];
   events: Record<string, number>;
+  /// Embudo de /probar en el periodo elegido (migración 005).
+  funnel?: {
+    views: number;
+    signups: number;
+    chrome_opens: number;
+    download_views: number;
+    group_clicks: number;
+    play_clicks: number;
+    installs: number;
+  };
+  spots_taken?: number;
   signups: Signup[];
 };
 
@@ -372,6 +383,17 @@ export default function AdminDashboard() {
   }
 
   const s = data?.summary;
+  const f = data?.funnel;
+  const funnel = f
+    ? [
+        { label: "Visitaron /probar", value: f.views },
+        { label: "Apartaron lugar", value: f.signups },
+        { label: "Tocaron «Activar mi acceso»", value: f.group_clicks },
+        { label: "Tocaron «Descargar Lávale»", value: f.play_clicks },
+        { label: "Teléfonos con la app", value: f.installs },
+      ]
+    : [];
+  const funnelTop = Math.max(1, ...funnel.map((step) => step.value));
   const kpis = s
     ? [
         { label: "Teléfonos con la app", value: s.installs, hint: "con estadísticas" },
@@ -380,7 +402,14 @@ export default function AdminDashboard() {
         { label: "Pedidos creados", value: s.orders, hint: "en total" },
         { label: "Entregas", value: s.deliveries, hint: "en total" },
         { label: "Avisos WhatsApp", value: s.notified, hint: "en total" },
-        { label: "Inscritos en la web", value: s.signups, hint: "/probar" },
+        {
+          label: "Inscritos en la web",
+          value: s.signups,
+          hint:
+            data?.spots_taken !== undefined
+              ? `${data.spots_taken} de ${testerProgram.spots} lugares`
+              : "/probar",
+        },
       ]
     : [];
 
@@ -429,6 +458,42 @@ export default function AdminDashboard() {
               </div>
             ))}
           </section>
+
+          {f && (
+            <section className="adm-card">
+              <h2>Embudo de /probar</h2>
+              <p className="adm-muted">
+                Últimos {days} días. El porcentaje es contra el paso anterior; si
+                uno se desploma, ahí se están perdiendo.
+              </p>
+              <ol className="adm-funnel">
+                {funnel.map((step, i) => {
+                  const prev = i > 0 ? funnel[i - 1].value : 0;
+                  const pct = i > 0 && prev > 0 ? Math.round((step.value / prev) * 100) : null;
+                  return (
+                    <li key={step.label}>
+                      <span className="adm-funnel-label">{step.label}</span>
+                      <span className="adm-funnel-track" aria-hidden="true">
+                        <span
+                          className="adm-funnel-bar"
+                          style={{ width: `${Math.max(2, (step.value / funnelTop) * 100)}%` }}
+                        />
+                      </span>
+                      <span className="adm-funnel-num">
+                        <strong>{step.value.toLocaleString("es-MX")}</strong>
+                        {pct !== null && <em>{pct}%</em>}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+              <p className="adm-muted">
+                Abrieron la página en Chrome desde Facebook: {f.chrome_opens} ·
+                llegaron a /probar/descargar: {f.download_views}. Los teléfonos
+                incluyen tus pruebas y los robots de Google.
+              </p>
+            </section>
+          )}
 
           <section className="adm-card">
             <h2>Teléfonos activos por día</h2>

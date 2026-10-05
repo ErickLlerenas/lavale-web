@@ -26,6 +26,9 @@ export const isPublished = Boolean(stores.google || stores.apple);
 export const testerProgram = {
   open: process.env.NEXT_PUBLIC_TESTER_PROGRAM !== "closed",
   days: 14,
+  /// Lugares que se anuncian ("las primeras 25 lavanderías"). Al llenarse,
+  /// la página sigue aceptando correos como lista de espera.
+  spots: 25,
   /// Grupo de Google que está dado de alta como lista de testers en Play.
   groupUrl: process.env.NEXT_PUBLIC_TESTER_GROUP_URL || null,
   /// Enlace de inscripción de la prueba cerrada (play.google.com/apps/testing/…).

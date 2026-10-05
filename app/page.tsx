@@ -187,8 +187,8 @@ export default function Home() {
               <GetApp />
               {recruiting && (
                 <a className="tester-pill" href="/probar">
-                  <strong>¿Tienes lavandería?</strong> Pruébala{" "}
-                  {testerProgram.days} días y quédatela gratis de por vida →
+                  <strong>¿Tienes lavandería?</strong> Gratis de por vida para
+                  las primeras {testerProgram.spots} →
                 </a>
               )}
             </div>
