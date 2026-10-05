@@ -2021,3 +2021,12 @@ a.store-badge:hover {
     grid-row: 2;
   }
 }
+.dl-howto {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-soft);
+  font-size: 15px;
+  text-align: left;
+}

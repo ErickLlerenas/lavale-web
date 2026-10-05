@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Chrome, Download, KeyRound } from "lucide-react";
+import { Chrome, Download } from "lucide-react";
 import { testerProgram } from "@/lib/site";
 import { track } from "@/lib/track";
 import { chromeUrl, readSource, readVisitor, type Visitor } from "@/lib/visitor";
 
-/// Los dos pasos para instalar la prueba de Google Play, sin jerga.
-/// Se muestran al inscribirse y en /probar/descargar (a donde llega quien
-/// abre la página en Chrome desde Facebook).
-export default function DownloadSteps({ email }: { email?: string | null }) {
+/// Botón de descarga de la prueba en Google Play (/probar/descargar).
+/// A esta página llega el enlace del correo que mandamos cuando el Gmail
+/// ya está dado de alta en la lista de testers de Play Console.
+export default function DownloadSteps() {
   const [visitor, setVisitor] = useState<Visitor | null>(null);
   const [source, setSource] = useState<string | null>(null);
 
@@ -17,9 +17,8 @@ export default function DownloadSteps({ email }: { email?: string | null }) {
     const from = readSource();
     setVisitor(readVisitor());
     setSource(from);
-    // Sin correo = página /probar/descargar (llegaron desde Chrome).
-    if (!email) track("download_view", from);
-  }, [email]);
+    track("download_view", from);
+  }, []);
 
   const stuckInApp = Boolean(visitor?.inApp && !visitor.ios);
 
@@ -46,50 +45,30 @@ export default function DownloadSteps({ email }: { email?: string | null }) {
         </div>
       )}
 
-      <ol className={`tester-next${stuckInApp ? " is-later" : ""}`}>
-        <li>
-          <span>
-            <strong>Activa tu acceso.</strong> En la página que se abre, toca
-            «Unirse al grupo».
-          </span>
-          {testerProgram.groupUrl ? (
-            <a
-              className="btn btn-primary"
-              href={testerProgram.groupUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => track("group_click", source)}
-            >
-              <KeyRound size={18} aria-hidden="true" /> Activar mi acceso
-            </a>
-          ) : (
-            <em>Te mandamos el enlace a tu correo.</em>
-          )}
-        </li>
-        <li>
-          <span>
-            <strong>Descarga Lávale.</strong> Acepta la invitación y toca
-            «Descargar» en Google Play.
-          </span>
-          {testerProgram.playTestUrl ? (
-            <a
-              className="btn btn-light"
-              href={testerProgram.playTestUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => track("play_click", source)}
-            >
-              <Download size={18} aria-hidden="true" /> Descargar Lávale
-            </a>
-          ) : (
-            <em>Este enlace también te llega por correo.</em>
-          )}
-        </li>
+      {testerProgram.playTestUrl ? (
+        <a
+          className={`btn ${stuckInApp ? "btn-light" : "btn-primary"} btn-block`}
+          href={testerProgram.playTestUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => track("play_click", source)}
+        >
+          <Download size={18} aria-hidden="true" /> Descargar la app
+        </a>
+      ) : (
+        <em>El enlace de descarga te llega por correo.</em>
+      )}
+
+      <ol className="dl-howto">
+        <li>Toca «Descargar la app».</li>
+        <li>En la página de Google Play, acepta la invitación.</li>
+        <li>Toca «Descargar» o «Instalar».</li>
       </ol>
 
       <p className="tester-fine">
-        Hazlo en ese orden. Si te pide iniciar sesión, entra con la cuenta de
-        Google de tu celular{email ? ` (${email})` : ""}.
+        Usa la cuenta de Google con la que te inscribiste. Si Play dice que la app
+        no está disponible, tu acceso todavía no está listo: espera el correo que
+        te mandamos.
       </p>
     </div>
   );

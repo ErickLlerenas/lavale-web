@@ -39,7 +39,7 @@ const steps = [
   {
     icon: Mail,
     title: "Aparta tu lugar",
-    text: "Solo con tu correo de Gmail. Tardas 10 segundos.",
+    text: "Déjanos tu Gmail y en unas horas te mandamos el enlace para descargarla.",
   },
   {
     icon: CalendarCheck,

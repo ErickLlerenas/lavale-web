@@ -2,7 +2,6 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
-import DownloadSteps from "@/components/DownloadSteps";
 import { signupApi, testerProgram } from "@/lib/site";
 import { track } from "@/lib/track";
 import { readSource, readVisitor } from "@/lib/visitor";
@@ -100,11 +99,14 @@ export default function TesterForm() {
       <div ref={doneRef} className="tester-card tester-done" aria-live="polite">
         <CheckCircle2 size={40} className="tester-done-icon" aria-hidden="true" />
         <h2>¡Tu lugar está apartado!</h2>
-        <p>Ahora descárgala. Son 2 pasos y tardas un minuto:</p>
-        <DownloadSteps email={trimmed} />
+        <p>
+          En unas horas te llega a <b>{trimmed}</b> un correo con el enlace para
+          descargar Lávale. Ábrelo desde tu celular Android.
+        </p>
         <p className="tester-fine">
-          Úsala {testerProgram.days} días sin desinstalarla. Al terminar te
-          mandamos a tu correo el código para tenerla gratis de por vida.
+          Si no lo ves, revisa Promociones o Spam. Úsala {testerProgram.days} días
+          sin desinstalarla y al terminar te mandamos el código para tenerla
+          gratis de por vida.
         </p>
       </div>
     );

@@ -388,8 +388,8 @@ export default function AdminDashboard() {
     ? [
         { label: "Visitaron /probar", value: f.views },
         { label: "Apartaron lugar", value: f.signups },
-        { label: "Tocaron «Activar mi acceso»", value: f.group_clicks },
-        { label: "Tocaron «Descargar Lávale»", value: f.play_clicks },
+        { label: "Abrieron el enlace del correo", value: f.download_views },
+        { label: "Tocaron «Descargar la app»", value: f.play_clicks },
         { label: "Teléfonos con la app", value: f.installs },
       ]
     : [];
@@ -488,8 +488,7 @@ export default function AdminDashboard() {
                 })}
               </ol>
               <p className="adm-muted">
-                Abrieron la página en Chrome desde Facebook: {f.chrome_opens} ·
-                llegaron a /probar/descargar: {f.download_views}. Los teléfonos
+                «Abrir en Chrome» desde Facebook: {f.chrome_opens}. Los teléfonos
                 incluyen tus pruebas y los robots de Google.
               </p>
             </section>
