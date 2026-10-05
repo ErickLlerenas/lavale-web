@@ -97,14 +97,16 @@ export default function Probar() {
           </div>
           <div className="hero-content tester-hero-content">
             <div className="hero-copy">
-              <p className="eyebrow">Para lavanderías en México</p>
+              <p className="eyebrow">🎁 Acceso anticipado · solo {spots} lugares</p>
               <h1>
-                Gratis de por vida <em>para las primeras {spots} lavanderías.</em>
+                Llévate Lávale <em>gratis de por vida.</em>
               </h1>
               <p className="hero-lead">
-                Lávale es la app para tu mostrador: folio para cada bolsa, aviso
-                por WhatsApp y corte de caja. Úsala {days} días y cuéntanos qué
-                te pareció.
+                Folio para cada bolsa, aviso por WhatsApp en un toque y corte de
+                caja sin calculadora. Despídete de la libreta.
+              </p>
+              <p className="price-tag">
+                Plan de por vida <s>{mxn(plans.lifetime)}</s> <b>$0</b>
               </p>
               <ul className="perks">
                 {perks.map((p) => (

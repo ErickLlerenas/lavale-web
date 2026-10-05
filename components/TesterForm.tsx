@@ -98,15 +98,14 @@ export default function TesterForm() {
     return (
       <div ref={doneRef} className="tester-card tester-done" aria-live="polite">
         <CheckCircle2 size={40} className="tester-done-icon" aria-hidden="true" />
-        <h2>¡Tu lugar está apartado!</h2>
+        <h2>🎉 ¡Listo, ya es tuya!</h2>
         <p>
-          En unas horas te llega a <b>{trimmed}</b> un correo con el enlace para
+          En unos minutos te llega a <b>{trimmed}</b> un correo con tu enlace para
           descargar Lávale. Ábrelo desde tu celular Android.
         </p>
         <p className="tester-fine">
-          Si no lo ves, revisa Promociones o Spam. Úsala {testerProgram.days} días
-          sin desinstalarla y al terminar te mandamos el código para tenerla
-          gratis de por vida.
+          ¿No lo ves? Revisa Promociones o Spam. Úsala {testerProgram.days} días
+          y te mandamos tu código del plan de por vida.
         </p>
       </div>
     );
@@ -114,6 +113,7 @@ export default function TesterForm() {
 
   return (
     <form className="tester-card" onSubmit={submit} noValidate>
+      {!ios && <p className="t-title">🎁 Aparta tu lugar gratis</p>}
       {ios && (
         <p className="t-ios" role="note">
           Por ahora Lávale es solo para <b>Android</b>. Déjanos tu correo y te
@@ -162,12 +162,12 @@ export default function TesterForm() {
           ? "Guardando…"
           : ios
             ? "Avísenme"
-            : "Quiero mi Lávale gratis"}
+            : "¡Quiero mi Lávale gratis!"}
       </button>
       <p className="tester-fine">
         {ios
           ? "Solo usamos tu correo para avisarte."
-          : "Sin tarjeta. Solo usamos tu correo para mandarte tu código."}{" "}
+          : "Te llega a tu correo en unos minutos. Sin tarjeta."}{" "}
         <a href="/privacidad">Aviso de privacidad</a>.
       </p>
     </form>

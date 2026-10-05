@@ -2030,3 +2030,60 @@ a.store-badge:hover {
   font-size: 15px;
   text-align: left;
 }
+/* /probar: gancho de precio y llamada */
+.price-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  width: fit-content;
+  margin: 0 0 18px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: #fff7d6;
+  color: #5c4400;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 10px 24px rgba(2, 30, 27, 0.25);
+  transform: rotate(-1.5deg);
+}
+.price-tag s {
+  color: #a08540;
+  font-weight: 600;
+}
+.price-tag b {
+  color: #0f766e;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.t-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.spots-dot {
+  animation: spots-pulse 1.6s ease-in-out infinite;
+}
+@keyframes spots-pulse {
+  50% {
+    box-shadow: 0 0 0 8px rgba(251, 191, 36, 0);
+  }
+}
+@media (max-width: 860px) {
+  .tester-hero-content .price-tag {
+    justify-self: center;
+    margin: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spots-dot {
+    animation: none;
+  }
+}
+@media (max-width: 860px) {
+  /* En el celular el precio y la letra chica ya lo dicen: el formulario sube. */
+  .tester-hero-content .perks {
+    display: none;
+  }
+}
