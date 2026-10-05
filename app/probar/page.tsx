@@ -10,7 +10,7 @@ import { mxn, plans, testerProgram } from "@/lib/site";
 const { days, spots } = testerProgram;
 
 export const metadata: Metadata = {
-  title: `Lávale gratis de por vida para las primeras ${spots} lavanderías`,
+  title: `Lávale · Gratis de por vida para las primeras ${spots} lavanderías`,
   description: `La app para el mostrador de tu lavandería: folio para cada bolsa, aviso por WhatsApp y corte de caja. Úsala ${days} días y quédatela gratis para siempre.`,
   alternates: { canonical: "/probar" },
 };
@@ -99,7 +99,7 @@ export default function Probar() {
             <div className="hero-copy">
               <p className="eyebrow">🎁 Acceso anticipado · solo {spots} lugares</p>
               <h1>
-                Llévate Lávale <em>gratis de por vida.</em>
+                Llévate la app <em>gratis de por vida.</em>
               </h1>
               <p className="hero-lead">
                 Folio para cada bolsa, aviso por WhatsApp en un toque y corte de
