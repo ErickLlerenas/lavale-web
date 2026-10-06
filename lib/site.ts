@@ -48,7 +48,7 @@ export const privacyEmail: string | null =
 /// Mismos valores que `lib/core/billing/plan_catalog.dart` en la app.
 export const plans = {
   monthly: 99,
-  lifetime: 1999,
+  lifetime: 999,
   trialDays: 7,
 } as const;
 
