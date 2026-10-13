@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacidad" },
 };
 
-const updated = "4 de octubre de 2026";
+const updated = "13 de octubre de 2026";
 
 export default function Privacidad() {
   const contact = privacyEmail ? (
@@ -68,6 +68,16 @@ export default function Privacidad() {
               Store. Usamos RevenueCat para saber qué plan tienes, con un
               identificador anónimo. No vemos tu tarjeta.
             </li>
+            <li>
+              <strong>Medición de anuncios (Meta).</strong> Anunciamos Lávale en
+              Facebook e Instagram. La app le avisa a Meta cuando se abre, cuando
+              empiezas la prueba gratis o compras un plan (con su precio) y cuando
+              ya recibiste tus primeros pedidos, para saber qué anuncios
+              funcionan. Nunca le mandamos tus pedidos, clientes, teléfonos ni
+              cobros. En iPhone, el identificador de publicidad solo se usa si
+              aceptas el permiso de rastreo de Apple; puedes cambiarlo en Ajustes
+              → Privacidad → Rastreo.
+            </li>
           </ul>
 
           <h2>3. Inscripción a la prueba (este sitio)</h2>
@@ -84,7 +94,7 @@ export default function Privacidad() {
           <p>
             No vendemos ni rentamos datos. Solo los manejan los proveedores que
             hacen funcionar el servicio: Google (Play y Grupos), Apple, RevenueCat,
-            Crisp, Supabase y Vercel, cada uno para lo descrito arriba.
+            Meta, Crisp, Supabase y Vercel, cada uno para lo descrito arriba.
           </p>
 
           <h2>5. Tus derechos</h2>
