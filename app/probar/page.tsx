@@ -21,7 +21,7 @@ const features = [
   {
     icon: Tag,
     title: "Folio para cada bolsa",
-    text: "Pesas, cobras o dejas anticipo, y la bolsa sale con su número.",
+    text: "Registra el peso o las prendas y el pedido queda con su folio.",
   },
   {
     icon: BellRing,

@@ -41,7 +41,7 @@ const beforeAfter = [
     after: "Aviso por WhatsApp en un toque",
   },
   {
-    before: "Sumar kilos y anticipos a mano",
+    before: "Sumar servicios y cobros a mano",
     after: "Total y saldo automáticos",
   },
   {
@@ -68,7 +68,7 @@ const features = [
   },
   {
     icon: HandCoins,
-    title: "Anticipos y cobros",
+    title: "Cobra y entrega",
     text: "Efectivo, tarjeta o transferencia. Te sugiere billetes y te dice el cambio. Cobras y entregas en un solo paso.",
   },
   {
