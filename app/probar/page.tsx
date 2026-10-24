@@ -5,13 +5,13 @@ import HeroPhone from "@/components/HeroPhone";
 import LandingNav from "@/components/LandingNav";
 import SpotsLeft from "@/components/SpotsLeft";
 import TesterForm from "@/components/TesterForm";
-import { mxn, plans, testerProgram } from "@/lib/site";
+import { testerProgram } from "@/lib/site";
 
 const { days, spots } = testerProgram;
 
 export const metadata: Metadata = {
-  title: `Lávale · Gratis de por vida para las primeras ${spots} lavanderías`,
-  description: `La app para el mostrador de tu lavandería: folio para cada bolsa, aviso por WhatsApp y corte de caja. Úsala ${days} días y quédatela gratis para siempre.`,
+  title: "Prueba Lávale en Android",
+  description: `La app para el mostrador de tu lavandería: folio para cada bolsa, aviso por WhatsApp y corte de caja. Participa en la prueba cerrada de ${days} días.`,
   alternates: { canonical: "/probar" },
 };
 
@@ -49,7 +49,7 @@ const steps = [
   {
     icon: Gift,
     title: "Es tuya para siempre",
-    text: `Te mandamos un código y el plan de por vida (vale ${mxn(plans.lifetime)}) te sale gratis.`,
+    text: `Si te inscribiste con la promoción de testers, al completar la prueba respetaremos tu acceso gratis de por vida.`,
   },
 ];
 
@@ -60,7 +60,7 @@ const faqs = [
   },
   {
     q: "¿Me van a cobrar algo?",
-    a: `No. No pedimos tarjeta. Al terminar los ${days} días te mandamos un código y el plan de por vida queda pagado.`,
+    a: `No. No pedimos tarjeta. Al terminar los ${days} días te mandamos un código y respetamos el acceso gratuito prometido a los testers.`,
   },
   {
     q: "¿Es difícil de usar?",
@@ -76,7 +76,7 @@ const faqs = [
   },
   {
     q: "¿Funciona en iPhone?",
-    a: "Por ahora solo en Android. Si tienes iPhone, deja tu correo y te avisamos cuando salga.",
+    a: "Este programa de testers es para Android. Lávale para iPhone ya está disponible en App Store con su suscripción mensual.",
   },
   {
     q: "¿Qué pasa con mis datos?",
@@ -99,14 +99,14 @@ export default function Probar() {
             <div className="hero-copy">
               <p className="eyebrow">🎁 Acceso anticipado · solo {spots} lugares</p>
               <h1>
-                Llévate la app <em>gratis de por vida.</em>
+                Ayúdanos a probar <em>Lávale en Android.</em>
               </h1>
               <p className="hero-lead">
                 Folio para cada bolsa, aviso por WhatsApp en un toque y corte de
                 caja sin calculadora. Despídete de la libreta.
               </p>
               <p className="price-tag">
-                Plan de por vida <s>{mxn(plans.lifetime)}</s> <b>$0</b>
+                Prueba cerrada · Sin tarjeta
               </p>
               <ul className="perks">
                 {perks.map((p) => (

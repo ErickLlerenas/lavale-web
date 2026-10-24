@@ -11,12 +11,12 @@ export const tagline = "Control para lavanderías";
 
 export const siteTitle = "Lávale · Control para lavanderías en México";
 export const siteDescription =
-  "Lávale es la app para lavanderías por kilo: folio para cada bolsa, aviso por WhatsApp cuando la ropa está lista y corte de caja. Funciona sin internet y sin crear cuenta.";
+  "Lávale es la app para lavanderías: folio para cada bolsa, aviso por WhatsApp cuando la ropa está lista y corte de caja. Funciona sin internet y sin crear cuenta.";
 
 /// `null` mientras la app no esté publicada en esa tienda.
 export const stores: { google: string | null; apple: string | null } = {
   google: null,
-  apple: null,
+  apple: "https://apps.apple.com/mx/app/id6819459731",
 };
 
 export const isPublished = Boolean(stores.google || stores.apple);
@@ -48,7 +48,6 @@ export const privacyEmail: string | null =
 /// Mismos valores que `lib/core/billing/plan_catalog.dart` en la app.
 export const plans = {
   monthly: 99,
-  lifetime: 999,
   trialDays: 7,
 } as const;
 

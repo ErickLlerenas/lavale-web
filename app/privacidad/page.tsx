@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacidad" },
 };
 
-const updated = "16 de octubre de 2026";
+const updated = "24 de octubre de 2026";
 
 export default function Privacidad() {
   const contact = privacyEmail ? (
@@ -34,28 +34,12 @@ export default function Privacidad() {
             para qué y cómo puedes ejercer tus derechos.
           </p>
 
-          <h2>1. Registro local y sincronización Pro</h2>
+          <h2>1. Registro local</h2>
           <p>
-            En Básico, los pedidos, nombres y teléfonos de tus clientes, cobros,
-            gastos y cortes de caja se guardan en tu dispositivo. Si haces un
-            respaldo, el archivo queda donde tú decidas guardarlo o mandarlo.
-          </p>
-          <p>
-            Si activas Pro y conectas tu lavandería, se guardan en Supabase los
-            pedidos, datos de clientes (nombre, teléfono y domicilio de recogida
-            si lo agregas), prendas, notas, importes, abonos, estado de entrega,
-            servicios y precios. Esto permite compartir los cambios entre el
-            local y los repartidores que tú vincules. Cada repartidor consulta
-            sus propios pedidos; el dueño consulta los del equipo y puede
-            desvincular dispositivos. Los cortes, gastos y ventas de mostrador
-            siguen siendo locales.
-          </p>
-          <p>
-            Pro identifica cada dispositivo mediante una sesión anónima y un
-            identificador, sin pedir correo ni contraseña. También guarda el
-            nombre que eliges para el dispositivo o repartidor y quién registró
-            cada cobro. Sin señal, los cambios quedan en el dispositivo y se
-            envían al recuperar internet.
+            Los pedidos, nombres, teléfonos y domicilios de tus clientes,
+            servicios, cobros, gastos y cortes se guardan en tu dispositivo.
+            No se sincronizan entre equipos. Los archivos PDF que exportas quedan
+            donde tú decidas guardarlos o compartirlos.
           </p>
           <p>
             Cuando mandas un ticket o un aviso por WhatsApp, la app solo abre
@@ -82,10 +66,8 @@ export default function Privacidad() {
             <li>
               <strong>Compras.</strong> Los pagos los procesan Google Play o App
               Store. Usamos RevenueCat para saber qué plan tienes, con un
-              identificador anónimo. Para activar o recuperar el local Pro,
-              nuestro servidor verifica el comprobante de la tienda y el estado
-              de la suscripción con RevenueCat. Conservamos una referencia de la
-              compra para recuperar la misma lavandería. No vemos tu tarjeta ni
+              identificador anónimo. La tienda y RevenueCat verifican las compras
+              y renovaciones. No vemos tu tarjeta ni
               la contraseña de tu cuenta Apple o Google.
             </li>
             <li>
@@ -126,20 +108,18 @@ export default function Privacidad() {
 
           <h2 id="borrar-datos">6. Cómo borrar tus datos</h2>
           <p>
-            Para solicitar que borremos los datos sincronizados de Pro, las
-            conversaciones de soporte, tu inscripción a la prueba o los datos
-            ligados a tu identificador anónimo, {contact} con el asunto
-            «Borrar mis datos». Para Pro, haz la solicitud desde el dispositivo
-            del dueño e indica el nombre de tu lavandería para que podamos
-            verificar la solicitud. Los borramos en un máximo
-            de 20 días hábiles. Las compras quedan registradas en Google Play o
-            App Store según sus propias reglas.
+            Para solicitar que borremos las conversaciones de soporte, tu
+            inscripción a la prueba o los datos ligados a tu identificador
+            anónimo, {contact} con el asunto «Borrar mis datos».
+            Si usaste funciones conectadas de una versión anterior, también
+            puedes solicitar la eliminación de esos registros. Los borramos en
+            un máximo de 20 días hábiles. Las compras quedan registradas en
+            Google Play o App Store según sus propias reglas.
           </p>
           <p>
             Desinstalar Lávale o borrar los datos de la app elimina el registro
-            local, pero no borra los pedidos que hayas sincronizado con Pro.
-            Borrar datos o desvincular un dispositivo tampoco cancela la
-            suscripción: se administra desde Google Play o App Store.
+            local. Esto no cancela la suscripción: se administra desde Google
+            Play o App Store.
           </p>
 
           <h2>7. Cambios a este aviso</h2>

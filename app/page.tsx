@@ -1,6 +1,4 @@
 import {
-  Archive,
-  BellRing,
   Check,
   CloudOff,
   HandCoins,
@@ -22,7 +20,7 @@ import LandingNav from "@/components/LandingNav";
 import {
   brandName,
   exampleKiloPrice,
-  isPublished,
+  stores,
   kilosToPay,
   mxn,
   plans,
@@ -31,12 +29,12 @@ import {
   testerProgram,
 } from "@/lib/site";
 
-const recruiting = !isPublished && testerProgram.open;
+const recruiting = !stores.google && testerProgram.open;
 
 const beforeAfter = [
   {
     before: "Bolsas sin nombre y ropa que se revuelve",
-    after: "Cada bolsa con su folio y su estante",
+    after: "Cada pedido con su folio y su cliente",
   },
   {
     before: "Llamar uno por uno para avisar",
@@ -61,7 +59,7 @@ const features = [
   {
     icon: Tag,
     title: "Folio para cada bolsa",
-    text: "Al guardar, el folio sale en grande para escribirlo con plumón. Al terminar, anotas el estante: «Está en A2».",
+    text: "Cada pedido tiene un folio que puedes escribir en la bolsa para identificar la ropa sin confusiones.",
   },
   {
     icon: MessageCircle,
@@ -76,12 +74,12 @@ const features = [
   {
     icon: Wallet,
     title: "Corte de caja por turno",
-    text: "Cuenta el efectivo, ve la diferencia y comparte el corte con el dueño por WhatsApp.",
+    text: "Cuenta el efectivo, revisa la diferencia y consulta tus cortes anteriores.",
   },
   {
     icon: CloudOff,
     title: "Sin internet ni cuenta",
-    text: "Todo vive en tu teléfono. Abres la app, pones el nombre de tu negocio y tu precio por kilo, y listo.",
+    text: "Tus pedidos y clientes viven en tu teléfono. Pon el nombre de tu negocio, agrega tus servicios y precios, y empieza.",
   },
 ];
 
@@ -89,15 +87,13 @@ const extras = [
   { icon: Users, label: "Clientes frecuentes" },
   { icon: Search, label: "Búsqueda por folio o teléfono" },
   { icon: StickyNote, label: "Notas: sin suavizante, delicada…" },
-  { icon: BellRing, label: "Recordatorio de ropa olvidada" },
-  { icon: Archive, label: "Respaldo para cambiar de teléfono" },
 ];
 
 const steps = [
   {
     n: "1",
     title: "Recibe",
-    text: "Nombre, kilos y cuándo se entrega. Folio a la bolsa.",
+    text: "Elige al cliente y registra el peso o las prendas. Folio a la bolsa.",
   },
   {
     n: "2",
@@ -121,7 +117,7 @@ const planBenefits = [
 const faqs = [
   {
     q: "¿Necesito internet?",
-    a: "No. Recibes, cobras y entregas sin conexión. Solo usas internet si quieres mandar el WhatsApp en ese momento.",
+    a: "Recibes, cobras y entregas sin conexión. Necesitas internet para activar o renovar la suscripción, enviar WhatsApp y usar el chat de soporte.",
   },
   {
     q: "¿Necesito impresora?",
@@ -129,7 +125,7 @@ const faqs = [
   },
   {
     q: "¿Dónde quedan mis datos?",
-    a: "En tu teléfono. No hay cuenta ni nube. Puedes sacar un respaldo para guardarlo o pasarlo a otro equipo.",
+    a: "En tu teléfono. Los pedidos, clientes y cortes no se sincronizan con otros dispositivos. Si desinstalas la app o borras sus datos, puedes perder ese registro.",
   },
   {
     q: "¿Funciona en Android y iPhone?",
@@ -137,7 +133,7 @@ const faqs = [
   },
   {
     q: "¿Cuánto cuesta?",
-    a: `Un solo plan con todo: ${mxn(plans.monthly)} al mes con ${plans.trialDays} días gratis, o ${mxn(plans.lifetime)} una sola vez y es tuya para siempre.`,
+    a: `Un solo plan con todo: ${mxn(plans.monthly)} al mes con ${plans.trialDays} días gratis. Cancela cuando quieras.`,
   },
 ];
 
@@ -152,7 +148,6 @@ function jsonLd() {
     description: siteDescription,
     offers: [
       { "@type": "Offer", price: plans.monthly, priceCurrency: "MXN" },
-      { "@type": "Offer", price: plans.lifetime, priceCurrency: "MXN" },
     ],
   };
 }
@@ -175,7 +170,7 @@ export default function Home() {
           </div>
           <div className="hero-content">
             <div className="hero-copy">
-              <p className="eyebrow">App para lavanderías por kilo</p>
+              <p className="eyebrow">App para lavanderías</p>
               <h1>
                 Recibe, cobra y entrega <em>sin libreta.</em>
               </h1>
@@ -187,8 +182,7 @@ export default function Home() {
               <GetApp />
               {recruiting && (
                 <a className="tester-pill" href="/probar">
-                  <strong>¿Tienes lavandería?</strong> Gratis de por vida para
-                  las primeras {testerProgram.spots} →
+                  <strong>¿Tienes Android?</strong> Ayúdanos a probar Lávale →
                 </a>
               )}
             </div>
@@ -322,22 +316,6 @@ export default function Home() {
                 </ul>
                 <a className="btn btn-primary" href="#descargar">
                   Empezar mis {plans.trialDays} días gratis
-                </a>
-              </div>
-              <div className="plan plan-lifetime">
-                <h3>De por vida</h3>
-                <div className="plan-price">
-                  <span className="amount">{mxn(plans.lifetime)}</span>
-                  <span className="period">MXN · pago único</span>
-                </div>
-                <p className="plan-note">Pagas una vez y es tuya.</p>
-                <ul className="plan-list">
-                  {planBenefits.map((b) => (
-                    <li key={b}>{b}</li>
-                  ))}
-                </ul>
-                <a className="btn btn-light" href="#descargar">
-                  Obtener de por vida
                 </a>
               </div>
             </div>

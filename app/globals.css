@@ -933,9 +933,9 @@ a.store-badge:hover {
 /* ---------- Precios ---------- */
 .pricing {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 24px;
-  max-width: 840px;
+  max-width: 440px;
   margin: 0 auto;
 }
 .plan {
@@ -954,11 +954,6 @@ a.store-badge:hover {
 .plan:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
-}
-.plan-lifetime {
-  border-color: transparent;
-  background: linear-gradient(150deg, #0b4a45, #0f766e);
-  color: #fff;
 }
 .plan-ribbon {
   position: absolute;
@@ -999,10 +994,6 @@ a.store-badge:hover {
   font-size: 14px;
   color: var(--ink-soft);
 }
-.plan-lifetime .period,
-.plan-lifetime .plan-note {
-  color: rgba(255, 255, 255, 0.75);
-}
 .plan-list {
   display: flex;
   flex: 1;
@@ -1032,10 +1023,6 @@ a.store-badge:hover {
   color: var(--primary);
   font-size: 12px;
   font-weight: 800;
-}
-.plan-lifetime .plan-list li::before {
-  background: rgba(255, 255, 255, 0.16);
-  color: var(--highlight);
 }
 .plan .btn {
   width: 100%;
