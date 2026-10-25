@@ -1,0 +1,260 @@
+/* Panel /admin: piezas nuevas. Lo base (.adm, .adm-card, .adm-kpi) vive en globals.css. */
+.two {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+.two > section {
+  margin-bottom: 16px;
+}
+
+/* Embudo: pirámide invertida centrada; más rojo = más gente se quedó ahí. */
+.funnel {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.funnel li {
+  display: grid;
+  grid-template-columns: minmax(130px, 1.1fr) 2fr 72px;
+  gap: 10px;
+  align-items: center;
+}
+.funnelLabel {
+  font-size: 0.85rem;
+}
+.funnelTrack {
+  display: flex;
+  justify-content: center;
+}
+.funnelBar {
+  height: 22px;
+  border-radius: 6px;
+}
+.funnelNum {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  justify-content: flex-end;
+  font-variant-numeric: tabular-nums;
+}
+.funnelNum em {
+  font-style: normal;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+.note {
+  margin: 12px 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+/* ¿Quién la usa? */
+.groups {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.group {
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: grid;
+  gap: 2px;
+  border: 1px solid var(--border);
+}
+.group strong {
+  font-size: 1.8rem;
+  font-variant-numeric: tabular-nums;
+}
+.group span {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.group em {
+  font-style: normal;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+.good {
+  background: var(--mint-soft);
+  border-color: var(--highlight);
+}
+.mid {
+  background: #fff8e6;
+  border-color: #f5dfa3;
+}
+.low {
+  background: var(--surface);
+}
+
+/* Pedidos por día */
+.bars {
+  display: grid;
+  gap: 4px;
+  height: 190px;
+  align-items: end;
+  margin-top: 8px;
+}
+.barCol {
+  display: grid;
+  grid-template-rows: 16px 1fr 16px 16px;
+  height: 100%;
+  align-items: end;
+  justify-items: center;
+  min-width: 0;
+}
+.bar {
+  width: 70%;
+  max-width: 28px;
+  min-height: 2px;
+  background: var(--primary);
+  border-radius: 5px 5px 2px 2px;
+  align-self: end;
+}
+.barValue {
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.barSelling {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+.barDay {
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+}
+
+/* Teléfonos */
+.tableHead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+.tableWrap {
+  overflow-x: auto;
+  margin: 0 -18px;
+  padding: 0 18px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.table code {
+  font-size: 0.8rem;
+}
+.num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.rowNew td {
+  background: var(--mint-soft);
+}
+.pill {
+  margin-left: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 999px;
+  padding: 2px 7px;
+}
+.progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.progress small {
+  margin-left: 4px;
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+}
+.dot,
+.dotOn {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot {
+  background: var(--border);
+}
+.dotOn {
+  background: var(--primary);
+}
+
+/* Ventas sin llave */
+.connect {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 0.9rem;
+}
+.connect p {
+  margin: 0;
+  flex: 1 1 320px;
+}
+
+/* Prueba cerrada (colapsada) */
+.summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.webFunnel,
+.signups {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+  display: grid;
+  gap: 6px;
+}
+.webFunnel li,
+.signups li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.88rem;
+}
+.signups em {
+  font-style: normal;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 520px) {
+  .funnel li {
+    grid-template-columns: 1fr 64px;
+  }
+  .funnelTrack {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+  .groups {
+    grid-template-columns: 1fr 1fr;
+  }
+}

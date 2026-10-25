@@ -1,15 +1,22 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import {
+  BarChart3,
   Copy,
-  Inbox,
+  ExternalLink,
+  Filter,
   LogOut,
   RefreshCw,
   Smartphone,
   Users,
+  Wallet,
 } from "lucide-react";
-import { signupApi, testerProgram } from "@/lib/site";
+import { signupApi } from "@/lib/site";
+import css from "./AdminPanel.module.css";
+
+/// Pedidos gratis antes de los planes (PlanCatalog.freeOrders en la app).
+const freeOrders = 7;
 
 /// Sesión de Supabase Auth guardada en este navegador.
 type Session = {
@@ -22,6 +29,8 @@ type Session = {
 type Daily = {
   day: string;
   active: number;
+  /// Teléfonos que crearon al menos un pedido ese día.
+  selling?: number;
   opens: number;
   orders: number;
   payments: number;
@@ -40,6 +49,10 @@ type Install = {
   deliveries: number;
   app_version: string;
   platform: string;
+  onboarded: boolean;
+  plans: boolean;
+  trial: boolean;
+  paid: boolean;
 };
 
 type Signup = {
@@ -52,6 +65,19 @@ type Signup = {
 
 type Dashboard = {
   generated_at: string;
+  /// Inicio del periodo elegido (medianoche de México).
+  since?: string;
+  /// Teléfonos que llegaron en el periodo y hasta dónde avanzaron.
+  app_funnel?: {
+    installed: number;
+    onboarded: number;
+    first_order: number;
+    orders3: number;
+    orders7: number;
+    plans: number;
+    trial: number;
+    paid: number;
+  };
   summary: {
     installs: number;
     active_today: number;
@@ -81,25 +107,6 @@ type Dashboard = {
 
 const storageKey = "lavale_admin_session_v1";
 const tz = "America/Mexico_City";
-
-const eventLabels: Record<string, string> = {
-  app_opened: "Abrir la app",
-  screen_orders: "Pantalla Pedidos",
-  screen_services: "Pantalla Servicios",
-  screen_cashbox: "Pantalla Caja",
-  screen_settings: "Pantalla Ajustes",
-  order_created: "Pedido creado",
-  payment_added: "Cobro / abono",
-  order_ready: "Marcado listo",
-  order_delivered: "Entregado",
-  order_notified: "Aviso por WhatsApp",
-  order_cancelled: "Pedido cancelado",
-  counter_sale: "Cobro sin pedido",
-  ticket_pdf: "Ticket PDF",
-  ticket_printed: "Ticket impreso",
-  backup_exported: "Respaldo guardado",
-  backup_restored: "Respaldo restaurado",
-};
 
 function readSession(): Session | null {
   try {
@@ -146,8 +153,24 @@ function fmtDateTime(iso: string) {
   });
 }
 
-function daysSince(iso: string) {
-  return Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
+function fmtDate(iso: string) {
+  return new Date(iso).toLocaleDateString("es-MX", {
+    timeZone: tz,
+    day: "numeric",
+    month: "short",
+  });
+}
+
+function shortDay(day: string) {
+  return String(new Date(`${day}T12:00:00`).getDate());
+}
+
+/// "hoy", "ayer" o "hace N días": lo que importa es si sigue usándola.
+function ago(iso: string) {
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
+  if (days <= 0) return "hoy";
+  if (days === 1) return "ayer";
+  return `hace ${days} días`;
 }
 
 export default function AdminDashboard() {
@@ -162,6 +185,8 @@ export default function AdminDashboard() {
   const [data, setData] = useState<Dashboard | null>(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [rc, setRc] = useState<Rc>(null);
+  const [tab, setTab] = useState<"serious" | "new" | "all">("serious");
 
   // 1) Al volver del enlace mágico, Supabase deja la sesión en el #hash.
   useEffect(() => {
@@ -263,6 +288,14 @@ export default function AdminDashboard() {
         return;
       }
       setData((await response.json()) as Dashboard);
+      // Ventas aparte: si RevenueCat falla, el resto del panel sigue.
+      fetch("/api/admin/revenuecat", {
+        headers: { Authorization: `Bearer ${current.accessToken}` },
+        cache: "no-store",
+      })
+        .then((r) => (r.ok ? r.json() : { connected: true, error: "No se pudieron leer las ventas." }))
+        .then((body) => setRc(body as Rc))
+        .catch(() => setRc({ connected: true, error: "No se pudieron leer las ventas." }));
     } catch {
       setError("Sin conexión. Intenta otra vez.");
     } finally {
@@ -309,19 +342,6 @@ export default function AdminDashboard() {
       setSending(false);
     }
   }
-
-  const maxActive = useMemo(
-    () => Math.max(1, ...(data?.daily.map((d) => d.active) ?? [1])),
-    [data],
-  );
-
-  const eventRows = useMemo(
-    () =>
-      Object.entries(data?.events ?? {})
-        .sort((a, b) => b[1] - a[1])
-        .map(([key, value]) => ({ label: eventLabels[key] ?? key, value })),
-    [data],
-  );
 
   async function copyEmails() {
     if (!data) return;
@@ -383,33 +403,57 @@ export default function AdminDashboard() {
   }
 
   const s = data?.summary;
+  const installs = data?.installs ?? [];
+  const since = data?.since ? new Date(data.since).getTime() : 0;
+  const isNew = (i: Install) => new Date(i.first_seen).getTime() >= since;
+  const serious = (i: Install) => i.orders >= 5 && i.days_active >= 3;
+  const weekAgo = Date.now() - 7 * 86_400_000;
+  const groups = {
+    serious: installs.filter(serious),
+    tried: installs.filter((i) => i.orders >= 1 && !serious(i)),
+    opened: installs.filter((i) => i.orders === 0),
+    activeWeek: installs.filter(
+      (i) => i.orders >= 1 && new Date(i.last_seen).getTime() >= weekAgo,
+    ),
+  };
+  const shown =
+    tab === "serious"
+      ? groups.serious
+      : tab === "new"
+        ? installs.filter(isNew)
+        : installs;
+
+  const af = data?.app_funnel;
+  const appFunnel = af
+    ? [
+        { label: "Instalaron y abrieron", value: af.installed },
+        { label: "Terminaron la bienvenida", value: af.onboarded },
+        { label: "Hicieron su primer pedido", value: af.first_order },
+        { label: "Llegaron a 3 pedidos", value: af.orders3 },
+        { label: `Usaron sus ${freeOrders} pedidos gratis`, value: af.orders7 },
+        { label: "Vieron los planes", value: af.plans },
+        { label: "Empezaron la prueba", value: af.trial },
+        { label: "Pagaron", value: af.paid },
+      ]
+    : [];
+  const funnelTop = Math.max(1, appFunnel[0]?.value ?? 1);
+
+  const daily = data?.daily ?? [];
+  const maxOrders = Math.max(1, ...daily.map((d) => d.orders));
+  const finished = daily.slice(0, -1); // hoy va a medias
+  const avgOrders = finished.length
+    ? finished.reduce((t, d) => t + d.orders, 0) / finished.length
+    : 0;
+  const avgSelling = finished.length
+    ? finished.reduce((t, d) => t + (d.selling ?? 0), 0) / finished.length
+    : 0;
+
   const f = data?.funnel;
-  const funnel = f
+  const webFunnel = f
     ? [
         { label: "Visitaron /probar", value: f.views },
         { label: "Apartaron lugar", value: f.signups },
-        { label: "Abrieron el enlace del correo", value: f.download_views },
-        { label: "Tocaron «Descargar la app»", value: f.play_clicks },
         { label: "Teléfonos con la app", value: f.installs },
-      ]
-    : [];
-  const funnelTop = Math.max(1, ...funnel.map((step) => step.value));
-  const kpis = s
-    ? [
-        { label: "Teléfonos con la app", value: s.installs, hint: "con estadísticas" },
-        { label: "Activos hoy", value: s.active_today, hint: "abrieron la app" },
-        { label: "Activos 7 días", value: s.active_7d, hint: "teléfonos distintos" },
-        { label: "Pedidos creados", value: s.orders, hint: "en total" },
-        { label: "Entregas", value: s.deliveries, hint: "en total" },
-        { label: "Avisos WhatsApp", value: s.notified, hint: "en total" },
-        {
-          label: "Inscritos en la web",
-          value: s.signups,
-          hint:
-            data?.spots_taken !== undefined
-              ? `${data.spots_taken} de ${testerProgram.spots} lugares`
-              : "/probar",
-        },
       ]
     : [];
 
@@ -420,236 +464,364 @@ export default function AdminDashboard() {
           <h1>Panel de Lávale</h1>
           <p className="adm-muted">
             {session.email}
-            {data && <> · actualizado {fmtDateTime(data.generated_at)}</>}
+            {data ? ` · actualizado ${fmtDateTime(data.generated_at)}` : ""}
           </p>
         </div>
         <div className="adm-actions">
           <div className="adm-seg" role="group" aria-label="Periodo">
-            {[7, 14, 30].map((n) => (
+            {[7, 14, 30].map((d) => (
               <button
-                key={n}
-                className={n === days ? "on" : ""}
-                aria-pressed={n === days}
-                onClick={() => setDays(n)}
+                key={d}
+                className={days === d ? "on" : ""}
+                onClick={() => setDays(d)}
               >
-                {n} días
+                {d} días
               </button>
             ))}
           </div>
-          <button className="adm-icon" onClick={() => void load()} disabled={loading} aria-label="Actualizar">
-            <RefreshCw size={18} className={loading ? "spin" : ""} />
+          <button
+            className="adm-icon"
+            onClick={() => void load()}
+            disabled={loading}
+            aria-label="Actualizar"
+          >
+            <RefreshCw size={16} className={loading ? "spin" : ""} />
           </button>
           <button className="adm-icon" onClick={signOut} aria-label="Salir">
-            <LogOut size={18} />
+            <LogOut size={16} />
           </button>
         </div>
       </header>
 
       {error && <p className="adm-error">{error}</p>}
 
-      {data && (
-        <>
-          <section className="adm-kpis">
-            {kpis.map((k) => (
-              <div className="adm-kpi" key={k.label}>
-                <span>{k.label}</span>
-                <strong>{k.value.toLocaleString("es-MX")}</strong>
-                <em>{k.hint}</em>
-              </div>
-            ))}
-          </section>
+      {/* Ventas: lo único que dice si el negocio funciona. */}
+      <section className="adm-card">
+        <h2>
+          <Wallet size={18} /> Ventas
+        </h2>
+        <p className="adm-muted">
+          De RevenueCat: iPhone y Android juntos, en pesos.
+        </p>
+        <Sales rc={rc} />
+      </section>
 
-          {f && (
-            <section className="adm-card">
-              <h2>Embudo de /probar</h2>
-              <p className="adm-muted">
-                Últimos {days} días. El porcentaje es contra el paso anterior; si
-                uno se desploma, ahí se están perdiendo.
-              </p>
-              <ol className="adm-funnel">
-                {funnel.map((step, i) => {
-                  const prev = i > 0 ? funnel[i - 1].value : 0;
-                  const pct = i > 0 && prev > 0 ? Math.round((step.value / prev) * 100) : null;
-                  return (
-                    <li key={step.label}>
-                      <span className="adm-funnel-label">{step.label}</span>
-                      <span className="adm-funnel-track" aria-hidden="true">
-                        <span
-                          className="adm-funnel-bar"
-                          style={{ width: `${Math.max(2, (step.value / funnelTop) * 100)}%` }}
-                        />
-                      </span>
-                      <span className="adm-funnel-num">
-                        <strong>{step.value.toLocaleString("es-MX")}</strong>
-                        {pct !== null && <em>{pct}%</em>}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ol>
-              <p className="adm-muted">
-                «Abrir en Chrome» desde Facebook: {f.chrome_opens}. Los teléfonos
-                incluyen tus pruebas y los robots de Google.
-              </p>
-            </section>
+      <div className={css.two}>
+        <section className="adm-card">
+          <h2>
+            <Filter size={18} /> Hasta dónde llegan
+          </h2>
+          <p className="adm-muted">
+            Teléfonos que instalaron en los últimos {days} días. El % es
+            cuántos pasaron del paso anterior.
+          </p>
+          {appFunnel.length > 0 && (
+            <ol className={css.funnel}>
+              {appFunnel.map((step, index) => {
+                const prev = index === 0 ? step.value : appFunnel[index - 1].value;
+                const pct = prev > 0 ? Math.round((step.value / prev) * 100) : 0;
+                const loss = index === 0 ? 0 : 100 - pct;
+                return (
+                  <li key={step.label}>
+                    <span className={css.funnelLabel}>{step.label}</span>
+                    <div className={css.funnelTrack}>
+                      <div
+                        className={css.funnelBar}
+                        style={{
+                          width: `${Math.max(2, (step.value / funnelTop) * 100)}%`,
+                          background: `color-mix(in srgb, #dc2626 ${loss}%, #2ec4b6)`,
+                        }}
+                      />
+                    </div>
+                    <span className={css.funnelNum}>
+                      <strong>{step.value}</strong>
+                      {index > 0 && <em>{prev > 0 ? `${pct}%` : "—"}</em>}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
           )}
+          <p className={css.note}>
+            Solo Android: en iPhone la app no manda estadísticas. Sus pruebas
+            y pagos sí salen en Ventas.
+          </p>
+        </section>
 
-          <section className="adm-card">
-            <h2>Teléfonos activos por día</h2>
-            <p className="adm-muted">
-              Teléfonos distintos que mandaron al menos un evento ese día (hora de
-              México).
-            </p>
-            <div className="adm-bars" role="img" aria-label="Teléfonos activos por día">
-              {data.daily.map((d) => (
-                <div className="adm-bar" key={d.day}>
-                  <span className="adm-bar-n">{d.active || ""}</span>
-                  <div
-                    className="adm-bar-fill"
-                    style={{ height: `${(d.active / maxActive) * 100}%` }}
-                    title={`${fmtDay(d.day)}: ${d.active} activos, ${d.orders} pedidos, ${d.signups} inscritos`}
-                  />
-                  <span className="adm-bar-day">{fmtDay(d.day)}</span>
-                </div>
+        <section className="adm-card">
+          <h2>
+            <Users size={18} /> ¿Quién la usa?
+          </h2>
+          <p className="adm-muted">Todos los teléfonos desde el inicio.</p>
+          <div className={css.groups}>
+            <Group
+              tone="good"
+              value={groups.serious.length}
+              label="La usan en serio"
+              hint="5 pedidos o más, en 3 días distintos"
+            />
+            <Group
+              tone="mid"
+              value={groups.tried.length}
+              label="Solo la probaron"
+              hint="hicieron algún pedido"
+            />
+            <Group
+              tone="low"
+              value={groups.opened.length}
+              label="Solo abrieron"
+              hint="ningún pedido (incluye tus pruebas)"
+            />
+            <Group
+              tone="good"
+              value={groups.activeWeek.length}
+              label="Vendieron esta semana"
+              hint="con pedidos en los últimos 7 días"
+            />
+          </div>
+        </section>
+      </div>
+
+      <section className="adm-card">
+        <h2>
+          <BarChart3 size={18} /> Pedidos por día
+        </h2>
+        <p className="adm-muted">
+          Promedio: {avgOrders.toFixed(1)} pedidos y {avgSelling.toFixed(1)}{" "}
+          lavanderías vendiendo al día (sin contar hoy). Debajo de cada barra:
+          cuántas vendieron.
+        </p>
+        <div
+          className={css.bars}
+          style={{ gridTemplateColumns: `repeat(${daily.length || 1}, 1fr)` }}
+          role="img"
+          aria-label="Pedidos por día"
+        >
+          {daily.map((d) => (
+            <div
+              key={d.day}
+              className={css.barCol}
+              title={`${fmtDay(d.day)}: ${d.orders} pedidos, ${d.selling ?? 0} vendiendo, ${d.active} abrieron`}
+            >
+              <span className={css.barValue}>{d.orders || ""}</span>
+              <div
+                className={css.bar}
+                style={{ height: `${(d.orders / maxOrders) * 100}%` }}
+              />
+              <span className={css.barSelling}>{d.selling ?? 0}</span>
+              <span className={css.barDay}>{shortDay(d.day)}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="adm-card">
+        <div className={css.tableHead}>
+          <h2>
+            <Smartphone size={18} /> Teléfonos
+          </h2>
+          <div className="adm-seg" role="group" aria-label="Filtro">
+            {(
+              [
+                ["serious", `En serio (${groups.serious.length})`],
+                ["new", `Nuevos (${installs.filter(isNew).length})`],
+                ["all", `Todos (${installs.length})`],
+              ] as const
+            ).map(([key, label]) => (
+              <button
+                key={key}
+                className={tab === key ? "on" : ""}
+                onClick={() => setTab(key)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <p className="adm-muted">
+          Cada fila es una instalación anónima (Android). Verde: llegó en los
+          últimos {days} días.
+        </p>
+        <div className={css.tableWrap}>
+          <table className={css.table}>
+            <thead>
+              <tr>
+                <th>Teléfono</th>
+                <th>Llegó</th>
+                <th>Última vez</th>
+                <th>Días usando</th>
+                <th>Pedidos</th>
+                <th>Entregas</th>
+                <th>Avance</th>
+                <th>Versión</th>
+              </tr>
+            </thead>
+            <tbody>
+              {shown.map((i) => (
+                <tr key={i.id} className={isNew(i) ? css.rowNew : undefined}>
+                  <td>
+                    <code>{i.id}</code>
+                    {isNew(i) && <span className={css.pill}>Nuevo</span>}
+                  </td>
+                  <td>{fmtDate(i.first_seen)}</td>
+                  <td>{ago(i.last_seen)}</td>
+                  <td>{i.days_active}</td>
+                  <td className={css.num}>{i.orders}</td>
+                  <td className={css.num}>{i.deliveries}</td>
+                  <td>
+                    <Progress install={i} />
+                  </td>
+                  <td>
+                    {i.app_version} · {i.platform}
+                  </td>
+                </tr>
               ))}
-            </div>
-            <div className="adm-table-wrap">
-              <table className="adm-table">
-                <thead>
-                  <tr>
-                    <th>Día</th>
-                    <th>Activos</th>
-                    <th>Aperturas</th>
-                    <th>Pedidos</th>
-                    <th>Cobros</th>
-                    <th>Entregas</th>
-                    <th>Avisos</th>
-                    <th>Sin pedido</th>
-                    <th>Inscritos</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...data.daily].reverse().map((d) => (
-                    <tr key={d.day}>
-                      <td>{fmtDay(d.day)}</td>
-                      <td>{d.active}</td>
-                      <td>{d.opens}</td>
-                      <td>{d.orders}</td>
-                      <td>{d.payments}</td>
-                      <td>{d.deliveries}</td>
-                      <td>{d.notified}</td>
-                      <td>{d.counter_sales}</td>
-                      <td>{d.signups}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section className="adm-card">
-            <h2>
-              <Smartphone size={18} /> Teléfonos (anónimos)
-            </h2>
-            <p className="adm-muted">
-              Cada fila es una instalación. No sabemos de quién es: el
-              identificador es al azar. Para Play cuentan los que siguen
-              {` ${testerProgram.days}`} días en la prueba.
-            </p>
-            {data.installs.length === 0 ? (
-              <p className="adm-empty">
-                <Inbox size={18} /> Todavía no llegan datos de la app.
-              </p>
-            ) : (
-              <div className="adm-table-wrap">
-                <table className="adm-table">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Primera vez</th>
-                      <th>Última vez</th>
-                      <th>Días usando</th>
-                      <th>Pedidos</th>
-                      <th>Entregas</th>
-                      <th>Versión</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.installs.map((i) => (
-                      <tr key={i.id} className={daysSince(i.last_seen) >= 3 ? "stale" : ""}>
-                        <td className="mono">{i.id}</td>
-                        <td>{fmtDateTime(i.first_seen)}</td>
-                        <td>{fmtDateTime(i.last_seen)}</td>
-                        <td>{i.days_active}</td>
-                        <td>{i.orders}</td>
-                        <td>{i.deliveries}</td>
-                        <td>
-                          {i.app_version} · {i.platform}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </section>
-
-          <section className="adm-grid">
-            <div className="adm-card">
-              <h2>Qué hacen en la app</h2>
-              {eventRows.length === 0 ? (
-                <p className="adm-empty">
-                  <Inbox size={18} /> Sin eventos todavía.
-                </p>
-              ) : (
-                <ul className="adm-list">
-                  {eventRows.map((r) => (
-                    <li key={r.label}>
-                      <span>{r.label}</span>
-                      <strong>{r.value.toLocaleString("es-MX")}</strong>
-                    </li>
-                  ))}
-                </ul>
+              {shown.length === 0 && (
+                <tr>
+                  <td colSpan={8} className="adm-muted">
+                    Nadie todavía.
+                  </td>
+                </tr>
               )}
-            </div>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-            <div className="adm-card">
-              <div className="adm-card-head">
-                <h2>
-                  <Users size={18} /> Inscritos en /probar
-                </h2>
-                {data.signups.length > 0 && (
-                  <button className="adm-link" onClick={copyEmails}>
-                    <Copy size={14} /> {copied ? "¡Copiados!" : "Copiar correos"}
-                  </button>
-                )}
-              </div>
-              {data.signups.length === 0 ? (
-                <p className="adm-empty">
-                  <Inbox size={18} /> Nadie se ha inscrito todavía.
-                </p>
-              ) : (
-                <ul className="adm-list adm-signups">
-                  {data.signups.map((p) => (
-                    <li key={p.email}>
-                      <div>
-                        <strong>{p.email}</strong>
-                        <span>
-                          {[p.laundry_name, p.city].filter(Boolean).join(" · ") || "—"}
-                          {p.source ? ` · ${p.source}` : ""}
-                        </span>
-                      </div>
-                      <em>{fmtDateTime(p.created_at)}</em>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </section>
-        </>
-      )}
-
-      {!data && loading && <p className="adm-muted">Cargando…</p>}
+      {/* La prueba cerrada de Play ya casi termina: queda guardada abajo. */}
+      <details className="adm-card">
+        <summary className={css.summary}>
+          Prueba cerrada de Android · {s?.signups ?? 0} inscritos
+        </summary>
+        {webFunnel.length > 0 && (
+          <ul className={css.webFunnel}>
+            {webFunnel.map((step) => (
+              <li key={step.label}>
+                <span>{step.label}</span>
+                <strong>{step.value}</strong>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className={css.tableHead}>
+          <p className="adm-muted">Últimos {days} días en /probar.</p>
+          <button className="adm-link" onClick={() => void copyEmails()}>
+            <Copy size={14} /> {copied ? "Copiados" : "Copiar correos"}
+          </button>
+        </div>
+        <ul className={css.signups}>
+          {(data?.signups ?? []).map((signup) => (
+            <li key={`${signup.email}-${signup.created_at}`}>
+              <span>{signup.email}</span>
+              <em>{fmtDateTime(signup.created_at)}</em>
+            </li>
+          ))}
+        </ul>
+      </details>
     </main>
+  );
+}
+
+type Rc =
+  | null
+  | { connected: false }
+  | { connected: true; metrics?: RcMetric[]; error?: string };
+
+type RcMetric = { id: string; name: string; value: number; unit: string };
+
+/// Lo que se muestra de RevenueCat y con qué nombre. El resto se ignora.
+const rcTiles: { id: string; label: string; hint: string; money?: boolean }[] = [
+  { id: "active_subscriptions", label: "Pagando", hint: "suscripciones activas" },
+  { id: "active_trials", label: "En prueba", hint: "7 días gratis" },
+  { id: "mrr", label: "Ingreso mensual", hint: "MRR", money: true },
+  { id: "revenue", label: "Cobrado", hint: "últimos 28 días", money: true },
+  { id: "new_customers", label: "Instalaciones", hint: "últimos 28 días" },
+];
+
+function Sales({ rc }: { rc: Rc }) {
+  if (rc === null) return <p className="adm-muted">Cargando…</p>;
+  if (!rc.connected) {
+    return (
+      <div className={css.connect}>
+        <p>
+          Para ver aquí las ventas, crea en RevenueCat una llave secreta{" "}
+          <strong>v2 de solo lectura</strong> (Project settings › API keys,
+          permiso de métricas) y agrégala en Vercel como{" "}
+          <code>REVENUECAT_API_KEY</code>. Luego vuelve a desplegar.
+        </p>
+        <a
+          className="btn btn-light"
+          href="https://app.revenuecat.com/projects/8802b1fc/overview"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Abrir RevenueCat <ExternalLink size={14} />
+        </a>
+      </div>
+    );
+  }
+  if (rc.error) return <p className="adm-error">{rc.error}</p>;
+  const byId = new Map((rc.metrics ?? []).map((m) => [m.id, m]));
+  return (
+    <div className="adm-kpis">
+      {rcTiles.map((tile) => {
+        const metric = byId.get(tile.id);
+        return (
+          <div className="adm-kpi" key={tile.id}>
+            <span>{tile.label}</span>
+            <strong>
+              {metric === undefined
+                ? "—"
+                : tile.money
+                  ? `$${Math.round(metric.value).toLocaleString("es-MX")}`
+                  : metric.value.toLocaleString("es-MX")}
+            </strong>
+            <em>{tile.hint}</em>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function Group({
+  value,
+  label,
+  hint,
+  tone,
+}: {
+  value: number;
+  label: string;
+  hint: string;
+  tone: "good" | "mid" | "low";
+}) {
+  return (
+    <div className={`${css.group} ${css[tone]}`}>
+      <strong>{value}</strong>
+      <span>{label}</span>
+      <em>{hint}</em>
+    </div>
+  );
+}
+
+const steps: { label: string; done: (i: Install) => boolean }[] = [
+  { label: "Bienvenida", done: (i) => i.onboarded },
+  { label: "Primer pedido", done: (i) => i.orders >= 1 },
+  { label: "3 pedidos", done: (i) => i.orders >= 3 },
+  { label: `${freeOrders} pedidos`, done: (i) => i.orders >= freeOrders },
+  { label: "Vio planes", done: (i) => i.plans },
+  { label: "Prueba o pago", done: (i) => i.trial || i.paid },
+];
+
+function Progress({ install }: { install: Install }) {
+  const reached = steps.filter((step) => step.done(install));
+  const last = reached[reached.length - 1];
+  return (
+    <span className={css.progress} title={steps.map((s) => `${s.done(install) ? "✓" : "·"} ${s.label}`).join("\n")}>
+      {steps.map((step) => (
+        <i key={step.label} className={step.done(install) ? css.dotOn : css.dot} />
+      ))}
+      <small>{install.paid ? "Pagó" : last ? last.label : "Solo abrió"}</small>
+    </span>
   );
 }
