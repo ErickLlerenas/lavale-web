@@ -21,22 +21,8 @@ export const stores: { google: string | null; apple: string | null } = {
 
 export const isPublished = Boolean(stores.google || stores.apple);
 
-/// Prueba cerrada de Google Play (12 testers × 14 días). Los enlaces vienen de
-/// variables de entorno en Vercel para cambiarlos sin tocar código.
-export const testerProgram = {
-  open: process.env.NEXT_PUBLIC_TESTER_PROGRAM !== "closed",
-  days: 14,
-  /// Lugares que se anuncian ("las primeras 25 lavanderías"). Al llenarse,
-  /// la página sigue aceptando correos como lista de espera.
-  spots: 25,
-  /// Grupo de Google que está dado de alta como lista de testers en Play.
-  groupUrl: process.env.NEXT_PUBLIC_TESTER_GROUP_URL || null,
-  /// Enlace de inscripción de la prueba cerrada (play.google.com/apps/testing/…).
-  playTestUrl: process.env.NEXT_PUBLIC_PLAY_TEST_URL || null,
-};
-
-/// Proyecto de Supabase donde la web solo puede insertar inscripciones.
-export const signupApi = {
+/// Public backend configuration used by the private administration page.
+export const publicApi = {
   url: process.env.NEXT_PUBLIC_SUPABASE_URL || null,
   anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || null,
 };

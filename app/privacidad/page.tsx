@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacidad" },
 };
 
-const updated = "24 de octubre de 2026";
+const updated = "26 de octubre de 2026";
 
 export default function Privacidad() {
   const contact = privacyEmail ? (
@@ -53,8 +53,7 @@ export default function Privacidad() {
               y acciones se usan (por ejemplo, «pedido creado»), la versión de
               la app y el sistema, con un identificador al azar que no se
               relaciona contigo. Sin nombres, teléfonos ni importes. Se usan para
-              mejorar la app. En la versión de prueba (testers) vienen
-              encendidas; en las demás solo si las activas. Las puedes apagar
+              mejorar la app. Solo se activan si lo eliges en Ajustes. Las puedes apagar
               cuando quieras en Ajustes → «Ayudar a mejorar Lávale».
             </li>
             <li>
@@ -82,14 +81,11 @@ export default function Privacidad() {
             </li>
           </ul>
 
-          <h2>3. Inscripción a la prueba (este sitio)</h2>
+          <h2>3. Inscripciones anteriores</h2>
           <p>
-            Si te inscribes en lavaleapp.vercel.app/probar guardamos tu correo y,
-            si los escribes, el nombre de tu lavandería, tu ciudad y de qué
-            anuncio llegaste. Los usamos para darte acceso a la prueba de Google
-            Play, mandarte tu código de regalo y pedirte comentarios sobre la
-            app. Se guardan en Supabase y los borramos cuando termina el
-            programa de prueba, salvo que nos pidas lo contrario antes.
+            Este sitio ya no recibe inscripciones al programa de prueba. Si te
+            inscribiste antes y tienes una solicitud sobre tus datos o tu
+            inscripción, puedes escribir al contacto de este aviso.
           </p>
 
           <h2>4. Con quién compartimos datos</h2>

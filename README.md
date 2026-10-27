@@ -20,18 +20,10 @@ yarn build      # lo mismo que corre Vercel
 
 Importa el repo en Vercel (framework: Next.js, sin configuración extra). Cuando tengas dominio, agrega la variable `NEXT_PUBLIC_SITE_URL` (p. ej. `https://lavale.mx`) para canonical, sitemap y Open Graph.
 
-## Prueba cerrada de Google Play (`/probar`)
+## Descargas y suscripción
 
-Página para anuncios: el tester deja su Gmail y después ve los botones para unirse al grupo y a la prueba. Al día 14, a quien siga inscrito se le manda un código de promoción de Play para el producto «De por vida».
+Solo se anuncia la suscripción mensual de $99 MXN, con siete días de prueba. Se retiraron la captación de testers y los regalos públicos. Los enlaces históricos `/probar`, `/probar/descargar` y `/email/bienvenida.html` redirigen a `/#descargar`.
 
-Variables en Vercel:
+`stores.google` debe apuntar a `https://play.google.com/store/apps/details?id=mx.ejele.lavale` cuando Google habilite producción y se verifique su disponibilidad pública. Mientras tanto permanece en `null`; no se manda a nuevos visitantes a una prueba cerrada.
 
-| Variable | Qué es |
-| --- | --- |
-| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Proyecto «Lávale» (`https://ljabtkihezrbwslcogae.supabase.co` y su llave publicable `sb_publishable_…`). La tabla `tester_signups` solo acepta inserciones (migración `002_tester_signups.sql` en el repo de la app). |
-| `NEXT_PUBLIC_TESTER_GROUP_URL` | Grupo de Google dado de alta como lista de testers en Play Console. |
-| `NEXT_PUBLIC_PLAY_TEST_URL` | Enlace de inscripción de la prueba cerrada. |
-| `NEXT_PUBLIC_TESTER_PROGRAM=closed` | Cierra la inscripción y quita los botones «Probar gratis». |
-| `NEXT_PUBLIC_PRIVACY_OWNER` / `NEXT_PUBLIC_PRIVACY_EMAIL` | Responsable y correo del aviso de privacidad (`/privacidad`). |
-
-Usa `?utm_source=facebook&utm_campaign=…` en los anuncios: se guarda en la columna `source`.
+Las variables `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` se conservan para el panel privado existente. No hay formularios públicos de inscripción. `NEXT_PUBLIC_PRIVACY_OWNER` y `NEXT_PUBLIC_PRIVACY_EMAIL` configuran el contacto del aviso de privacidad.

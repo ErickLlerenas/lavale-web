@@ -1305,132 +1305,6 @@ a.store-badge:hover {
     opacity: 1;
   }
 }
-
-
-/* ---------- Programa de testers (/probar) ---------- */
-.tester-pill {
-  display: inline-block;
-  margin-top: 22px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  color: #fff;
-  font-size: 14px;
-  text-decoration: none;
-  transition: background 0.15s ease;
-}
-.tester-pill:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-.tester-pill strong {
-  color: var(--highlight);
-}
-.cta-tester {
-  margin-top: 18px;
-}
-.tester-hero {
-  min-height: auto;
-  padding: 128px 0 96px;
-}
-.tester-hero-content {
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
-  align-items: start;
-}
-.tester-steps {
-  display: grid;
-  gap: 14px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.tester-steps li {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  text-align: left;
-}
-.tester-steps .feature-icon,
-.tester-features .feature-icon {
-  flex: none;
-  width: 42px;
-  height: 42px;
-  margin: 0;
-}
-.tester-steps strong,
-.tester-features strong {
-  display: block;
-  color: var(--ink);
-  font-size: 17px;
-}
-.tester-steps li > span:last-child,
-.tester-features li > span:last-child {
-  color: var(--ink-soft);
-  font-size: 15px;
-  line-height: 1.45;
-}
-.tester-card {
-  display: grid;
-  gap: 16px;
-  padding: 28px;
-  border-radius: 24px;
-  background: var(--card);
-  color: var(--ink);
-  box-shadow: var(--shadow-lg);
-  text-align: left;
-}
-.tester-card h2 {
-  margin: 0;
-  font-size: 24px;
-  letter-spacing: -0.02em;
-}
-.tester-card p {
-  margin: 0;
-}
-.t-field {
-  display: grid;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: 700;
-}
-.t-field em {
-  color: var(--ink-soft);
-  font-style: normal;
-  font-weight: 500;
-}
-.t-field input {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--ink);
-  font: inherit;
-  font-size: 16px;
-  font-weight: 500;
-}
-.t-field input:focus {
-  outline: none;
-  border-color: var(--primary);
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
-}
-.t-field-hint {
-  color: #b45309;
-  font-weight: 500;
-}
-.t-field-error {
-  color: var(--danger);
-  font-size: 14px;
-  font-weight: 600;
-}
-.t-field-trap {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
 .btn-block {
   width: 100%;
   border: 0;
@@ -1439,56 +1313,6 @@ a.store-badge:hover {
 .btn-block:disabled {
   opacity: 0.7;
   cursor: progress;
-}
-.tester-fine {
-  color: var(--ink-soft);
-  font-size: 13px;
-  line-height: 1.45;
-}
-.tester-fine a {
-  color: var(--primary-dark);
-  font-weight: 600;
-}
-.tester-done {
-  text-align: center;
-  justify-items: center;
-}
-.tester-done-icon {
-  color: var(--primary);
-}
-.tester-next {
-  display: grid;
-  gap: 14px;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: next;
-  text-align: left;
-}
-.tester-next li {
-  display: grid;
-  gap: 10px;
-  padding: 16px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  counter-increment: next;
-}
-.tester-next li > span::before {
-  content: counter(next) ". ";
-  font-weight: 800;
-  color: var(--primary);
-}
-.tester-next .btn {
-  padding: 12px 18px;
-  font-size: 15px;
-}
-.tester-next .btn-light {
-  border: 1.5px solid var(--border);
-}
-.tester-next em {
-  color: var(--ink-soft);
-  font-size: 14px;
 }
 
 /* ---------- Aviso de privacidad ---------- */
@@ -1520,39 +1344,6 @@ a.store-badge:hover {
 .legal-updated {
   margin: 0 0 28px;
   font-size: 14px;
-}
-
-@media (max-width: 860px) {
-  .tester-hero {
-    padding: 100px 0 56px;
-  }
-  .tester-hero-content {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  /* En el teléfono el formulario va justo después del titular. */
-  .tester-hero-content .hero-copy {
-    display: contents;
-  }
-  .tester-hero-content .eyebrow {
-    justify-self: center;
-    margin: 0;
-  }
-  .tester-hero-content h1,
-  .tester-hero-content .hero-lead {
-    margin: 0;
-  }
-  .tester-hero-content h1 {
-    font-size: clamp(32px, 9vw, 44px);
-  }
-  .tester-hero-content .perks,
-  .tester-hero-content .spots {
-    justify-self: center;
-    margin: 0;
-  }
-  .tester-card {
-    padding: 22px;
-  }
 }
 
 /* ---------- Panel /admin ---------- */
@@ -1826,9 +1617,6 @@ a.store-badge:hover {
   padding: 0;
   list-style: none;
 }
-.tester-hero-content .hero-copy .perks {
-  justify-content: flex-start;
-}
 .perks li {
   display: inline-flex;
   align-items: center;
@@ -1843,119 +1631,7 @@ a.store-badge:hover {
 .perks svg {
   color: var(--highlight);
 }
-.spots {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 15px;
-}
-.spots b {
-  color: var(--highlight);
-  font-size: 17px;
-}
-.spots-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #fbbf24;
-  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.25);
-}
-.t-field-note {
-  color: var(--ink-soft);
-  font-weight: 500;
-}
-.t-ios {
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: #fff7e6;
-  color: #7a4b00;
-  font-size: 14px;
-  line-height: 1.45;
-}
-.dl {
-  display: grid;
-  gap: 14px;
-  width: 100%;
-}
-.dl-inapp {
-  display: grid;
-  gap: 10px;
-  padding: 16px;
-  border-radius: 16px;
-  background: #fff7e6;
-  border: 1.5px solid #f5c66b;
-  color: #5c3a00;
-  text-align: left;
-}
-.dl-inapp strong {
-  font-size: 17px;
-}
-.dl-inapp p {
-  font-size: 15px;
-  line-height: 1.45;
-}
-.dl-inapp small {
-  font-size: 13px;
-  line-height: 1.45;
-}
-.dl-inapp .btn {
-  padding: 12px 18px;
-  font-size: 15px;
-}
-.tester-next.is-later {
-  opacity: 0.6;
-}
-.tester-demo {
-  background: var(--card);
-}
-.tester-demo-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 64px;
-}
-.tester-demo .section-title {
-  text-align: left;
-}
-.tester-demo-phone {
-  justify-self: center;
-}
-.tester-features {
-  display: grid;
-  gap: 18px;
-  margin: 24px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.tester-features li,
-.tester-how .tester-steps li {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-.tester-how .tester-steps {
-  gap: 18px;
-  margin: 24px 0 28px;
-}
-.tester-again {
-  display: flex;
-  width: fit-content;
-  margin: 0 auto;
-}
-.tester-solo {
-  grid-template-columns: minmax(0, 480px);
-  justify-content: center;
-}
 @media (max-width: 860px) {
-  .tester-demo-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .tester-demo .section-title {
-    text-align: center;
-  }
   .perks li {
     font-size: 13px;
     padding: 5px 10px;
@@ -2008,15 +1684,6 @@ a.store-badge:hover {
     grid-row: 2;
   }
 }
-.dl-howto {
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  padding-left: 20px;
-  color: var(--ink-soft);
-  font-size: 15px;
-  text-align: left;
-}
 /* /probar: gancho de precio y llamada */
 .price-tag {
   display: inline-flex;
@@ -2043,34 +1710,8 @@ a.store-badge:hover {
   font-weight: 800;
   letter-spacing: -0.02em;
 }
-.t-title {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-.spots-dot {
-  animation: spots-pulse 1.6s ease-in-out infinite;
-}
 @keyframes spots-pulse {
   50% {
     box-shadow: 0 0 0 8px rgba(251, 191, 36, 0);
-  }
-}
-@media (max-width: 860px) {
-  .tester-hero-content .price-tag {
-    justify-self: center;
-    margin: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .spots-dot {
-    animation: none;
-  }
-}
-@media (max-width: 860px) {
-  /* En el celular el precio y la letra chica ya lo dicen: el formulario sube. */
-  .tester-hero-content .perks {
-    display: none;
   }
 }

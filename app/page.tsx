@@ -26,10 +26,7 @@ import {
   plans,
   siteDescription,
   siteUrl,
-  testerProgram,
 } from "@/lib/site";
-
-const recruiting = !stores.google && testerProgram.open;
 
 const beforeAfter = [
   {
@@ -180,11 +177,6 @@ export default function Home() {
                 cuenta.
               </p>
               <GetApp />
-              {recruiting && (
-                <a className="tester-pill" href="/probar">
-                  <strong>¿Tienes Android?</strong> Ayúdanos a probar Lávale →
-                </a>
-              )}
             </div>
             <div className="hero-visual">
               <HeroPhone />
@@ -349,15 +341,10 @@ export default function Home() {
               <img src="/logo.svg" alt="" width="64" height="64" className="cta-logo" />
               <h2>Tu lavandería, en orden desde hoy.</h2>
               <p>
-                Descárgala, pon el nombre de tu negocio y tu precio por kilo, y
+                Descárgala, pon el nombre de tu negocio, tus servicios y precios, y
                 recibe tu primer pedido. Sin cuenta y sin internet.
               </p>
               <GetApp align="center" />
-              {recruiting && (
-                <a className="btn btn-light cta-tester" href="/probar">
-                  Quiero probarla gratis
-                </a>
-              )}
             </div>
           </div>
         </section>

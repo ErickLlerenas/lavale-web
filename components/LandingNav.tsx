@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { isPublished, testerProgram } from "@/lib/site";
 
 const links = [
   { href: "/#funciones", label: "Funciones" },
@@ -35,15 +34,7 @@ export default function LandingNav() {
             </a>
           ))}
         </div>
-        {!isPublished && testerProgram.open ? (
-          <a className="nav-cta" href="/probar">
-            Probar gratis
-          </a>
-        ) : (
-          <a className="nav-cta" href="/#descargar">
-            Descargar
-          </a>
-        )}
+        <a className="nav-cta" href="/#descargar">Descargar</a>
       </nav>
     </header>
   );

@@ -10,7 +10,7 @@ export default function Footer() {
         <nav aria-label="Pie de página">
           <a href="/#funciones">Funciones</a>
           <a href="/#precios">Precios</a>
-          <a href="/probar">Probar gratis</a>
+          <a href="/#descargar">Descargar</a>
           <a href="/privacidad">Privacidad</a>
         </nav>
       </div>

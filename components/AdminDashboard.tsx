@@ -12,7 +12,7 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
-import { signupApi } from "@/lib/site";
+import { publicApi } from "@/lib/site";
 import css from "./AdminPanel.module.css";
 
 /// Pedidos gratis antes de los planes (PlanCatalog.freeOrders en la app).
@@ -174,7 +174,7 @@ function ago(iso: string) {
 }
 
 export default function AdminDashboard() {
-  const api = signupApi;
+  const api = publicApi;
   const [session, setSession] = useState<Session | null>(null);
   const [ready, setReady] = useState(false);
   const [email, setEmail] = useState("");
