@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacidad" },
 };
 
-const updated = "26 de octubre de 2026";
+const updated = "29 de octubre de 2026";
 
 export default function Privacidad() {
   const contact = privacyEmail ? (
@@ -49,12 +49,12 @@ export default function Privacidad() {
           <h2>2. Datos que sí salen de tu teléfono</h2>
           <ul>
             <li>
-              <strong>Estadísticas anónimas (opcional).</strong> Qué pantallas
+              <strong>Estadísticas anónimas.</strong> Qué pantallas
               y acciones se usan (por ejemplo, «pedido creado»), la versión de
               la app y el sistema, con un identificador al azar que no se
               relaciona contigo. Sin nombres, teléfonos ni importes. Se usan para
-              mejorar la app. Solo se activan si lo eliges en Ajustes. Las puedes apagar
-              cuando quieras en Ajustes → «Ayudar a mejorar Lávale».
+              mejorar la app. Vienen activadas y las puedes apagar cuando quieras
+              en Ajustes → «Compartir uso anónimo».
             </li>
             <li>
               <strong>Chat de soporte.</strong> Si nos escribes desde la app, el
