@@ -57,11 +57,54 @@ export async function GET(request: Request) {
       value,
       unit,
     }));
-    return NextResponse.json({ connected: true, metrics });
+    // Pruebas por día y tienda: si falla (p. ej. la llave no tiene permiso de
+    // gráficas), el resto de Dinero sigue y el panel cuenta con la app.
+    const trials = await trialsByDay().catch(() => null);
+    return NextResponse.json({ connected: true, metrics, trials });
   } catch {
     return NextResponse.json({
       connected: true,
       error: "RevenueCat no respondió. Intenta otra vez.",
     });
   }
+}
+
+type TrialDay = { day: string; total: number; ios: number; android: number };
+
+/// Gráfica «New Trials» de los últimos 35 días, por tienda (permiso
+/// charts_metrics:charts:read). Los días de RevenueCat van en UTC, igual que
+/// su panel, así que «hoy» cuadra con lo que Erick ve allá.
+async function trialsByDay(): Promise<TrialDay[] | null> {
+  const day = (d: Date) => d.toISOString().slice(0, 10);
+  const end = new Date();
+  const start = new Date(end.getTime() - 34 * 86_400_000);
+  const params = new URLSearchParams({
+    realtime: "true",
+    start_date: day(start),
+    end_date: day(end),
+    resolution: "0",
+    segment: "store",
+  });
+  const response = await fetch(
+    `https://api.revenuecat.com/v2/projects/${rcProject}/charts/trials_new?${params}`,
+    { headers: { Authorization: `Bearer ${rcKey}` }, cache: "no-store" },
+  );
+  if (!response.ok) return null;
+  const body = (await response.json()) as {
+    values?: { cohort: number; segment?: number; value: number }[];
+    segments?: { display_name: string; is_total?: boolean }[];
+  };
+  const segments = body.segments ?? [];
+  const byDay = new Map<string, TrialDay>();
+  for (const point of body.values ?? []) {
+    if (typeof point?.cohort !== "number") return null;
+    const key = day(new Date(point.cohort * 1000));
+    const row = byDay.get(key) ?? { day: key, total: 0, ios: 0, android: 0 };
+    const segment = segments[point.segment ?? 0];
+    if (segment?.is_total) row.total = point.value;
+    else if (segment?.display_name === "App Store") row.ios = point.value;
+    else if (segment?.display_name === "Play Store") row.android = point.value;
+    byDay.set(key, row);
+  }
+  return [...byDay.values()].sort((a, b) => a.day.localeCompare(b.day));
 }

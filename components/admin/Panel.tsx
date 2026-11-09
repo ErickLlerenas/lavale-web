@@ -21,10 +21,12 @@ export type Install = {
 export type PanelData = { generated_at: string; installs: Install[] };
 
 export type RcMetric = { id: string; name: string; value: number; unit: string };
+/// Pruebas nuevas de un día (UTC) según RevenueCat.
+export type TrialDay = { day: string; total: number; ios: number; android: number };
 export type Rc =
   | null
   | { connected: false }
-  | { connected: true; metrics?: RcMetric[]; error?: string };
+  | { connected: true; metrics?: RcMetric[]; error?: string; trials?: TrialDay[] | null };
 
 export type Period = "hoy" | "ayer" | "7" | "30";
 
@@ -142,6 +144,18 @@ export default function Panel({
   const byStore = (list: Row[], store: Store) => list.filter((r) => r.store === store);
 
   const downloads = cohort.length;
+  // Las pruebas que empezaron en el periodo, como las cuenta RevenueCat. Sin
+  // su gráfica, se cuenta con la app: solo quienes descargaron en el periodo.
+  const rcTrials =
+    rc?.connected && !rc.error && rc.trials
+      ? rc.trials
+          .filter((t) => t.day >= from && t.day <= to)
+          .reduce((s, t) => ({ total: s.total + t.total, ios: s.ios + t.ios, android: s.android + t.android }), {
+            total: 0,
+            ios: 0,
+            android: 0,
+          })
+      : null;
   const stats = [
     {
       label: "Descargas",
@@ -159,11 +173,17 @@ export default function Panel({
       detail: `${pct(count(cohort, (r) => r.orders >= signalOrders), downloads)} · la señal de pago`,
       signal: true,
     },
-    {
-      label: "Empezaron prueba",
-      value: count(cohort, (r) => r.paid),
-      detail: `iPhone ${count(byStore(cohort, "ios"), (r) => r.paid)} · Android ${count(byStore(cohort, "android"), (r) => r.paid)}`,
-    },
+    rcTrials
+      ? {
+          label: "Empezaron prueba",
+          value: rcTrials.total,
+          detail: `iPhone ${rcTrials.ios} · Android ${rcTrials.android}`,
+        }
+      : {
+          label: "Empezaron prueba",
+          value: count(cohort, (r) => r.paid),
+          detail: `iPhone ${count(byStore(cohort, "ios"), (r) => r.paid)} · Android ${count(byStore(cohort, "android"), (r) => r.paid)}`,
+        },
   ];
 
   // Últimos 14 días, cada uno con lo que hicieron quienes llegaron ese día.
@@ -246,8 +266,11 @@ export default function Panel({
             ))}
           </div>
           <p className={css.foot}>
-            Quienes descargaron {periodText} y hasta dónde han llegado. La prueba
-            cuenta desde la 1.0.22; RevenueCat tiene el total.
+            Descargas, primer pedido y 3 pedidos: quienes descargaron {periodText} y
+            hasta dónde han llegado.{" "}
+            {rcTrials
+              ? `Prueba: las que empezaron ${periodText}, de RevenueCat (sus días van en hora UTC).`
+              : "Prueba: de quienes descargaron en el periodo (desde la 1.0.22)."}
           </p>
         </section>
 
