@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacidad" },
 };
 
-const updated = "29 de octubre de 2026";
+const updated = "20 de noviembre de 2026";
 
 export default function Privacidad() {
   const contact = privacyEmail ? (
@@ -38,8 +38,9 @@ export default function Privacidad() {
           <p>
             Los pedidos, nombres, teléfonos y domicilios de tus clientes,
             servicios, cobros, gastos y cortes se guardan en tu dispositivo.
-            No se sincronizan entre equipos. Los archivos PDF que exportas quedan
-            donde tú decidas guardarlos o compartirlos.
+            No salen de ahí, a menos que tú enciendas el respaldo en la nube
+            (ver el punto 2). Los archivos PDF que exportas quedan donde tú
+            decidas guardarlos o compartirlos.
           </p>
           <p>
             Cuando mandas un ticket o un aviso por WhatsApp, la app solo abre
@@ -55,6 +56,21 @@ export default function Privacidad() {
               relaciona contigo. Sin nombres, teléfonos ni importes. Se usan para
               mejorar la app. Vienen activadas y las puedes apagar cuando quieras
               en Ajustes → «Compartir uso anónimo».
+            </li>
+            <li>
+              <strong>Respaldo en la nube (opcional).</strong> Viene apagado.
+              Si lo enciendes en Ajustes → «Respaldo en la nube», una copia de
+              tu registro (pedidos, nombres, teléfonos y domicilios de tus
+              clientes, servicios, precios, cobros, gastos y cortes) se guarda
+              en nuestros servidores, alojados con Supabase en Canadá, para que
+              la recuperes si cambias o pierdes tu teléfono. La copia se liga a
+              tu compra con el identificador anónimo de RevenueCat; no te
+              pedimos correo ni contraseña. Las fotos de «Cómo llegó» no se
+              suben. Los datos de tus clientes son tuyos: nosotros solo los
+              guardamos por encargo tuyo, no los usamos para otra cosa y no los
+              compartimos. Guardamos la copia más reciente y algunas de los
+              últimos 7 días. Puedes apagarlo cuando quieras: deja de subir
+              cambios y la copia se conserva hasta que nos pidas borrarla.
             </li>
             <li>
               <strong>Chat de soporte.</strong> Si nos escribes desde la app, el
@@ -113,9 +129,15 @@ export default function Privacidad() {
             Google Play o App Store según sus propias reglas.
           </p>
           <p>
+            Para borrar tu respaldo en la nube, escríbenos desde «Escríbenos»
+            en Ajustes de la app con el mensaje «Borrar mi respaldo»: así
+            sabemos de qué lavandería es, porque no tenemos tu correo ni tu
+            nombre. Lo borramos en un máximo de 20 días hábiles.
+          </p>
+          <p>
             Desinstalar Lávale o borrar los datos de la app elimina el registro
-            local. Esto no cancela la suscripción: se administra desde Google
-            Play o App Store.
+            local, pero no el respaldo en la nube si lo habías encendido. Tampoco
+            cancela la suscripción: se administra desde Google Play o App Store.
           </p>
 
           <h2>7. Cambios a este aviso</h2>
