@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacidad" },
 };
 
-const updated = "20 de noviembre de 2026";
+const updated = "22 de noviembre de 2026";
 
 export default function Privacidad() {
   const contact = privacyEmail ? (
@@ -39,8 +39,8 @@ export default function Privacidad() {
             Los pedidos, nombres, teléfonos y domicilios de tus clientes,
             servicios, cobros, gastos y cortes se guardan en tu dispositivo.
             No salen de ahí, a menos que tú enciendas el respaldo en la nube
-            (ver el punto 2). Los archivos PDF que exportas quedan donde tú
-            decidas guardarlos o compartirlos.
+            o «Varios celulares» (ver el punto 2). Los archivos PDF que
+            exportas quedan donde tú decidas guardarlos o compartirlos.
           </p>
           <p>
             Cuando mandas un ticket o un aviso por WhatsApp, la app solo abre
@@ -71,6 +71,18 @@ export default function Privacidad() {
               compartimos. Guardamos la copia más reciente y algunas de los
               últimos 7 días. Puedes apagarlo cuando quieras: deja de subir
               cambios y la copia se conserva hasta que nos pidas borrarla.
+            </li>
+            <li>
+              <strong>Varios celulares (opcional).</strong> Viene apagado. Si
+              lo enciendes en Ajustes → «Varios celulares», tu registro se
+              guarda en la nube, igual que el respaldo, y además se copia en
+              los celulares que tú unas con un código: tus empleados ven y
+              capturan los mismos pedidos, clientes y cobros desde su teléfono.
+              Guardamos el nombre que cada quien escribe al unirse, para que
+              sepas de quién es cada celular, y cuándo se conectó por última
+              vez. Tú decides quién entra y lo puedes quitar cuando quieras: al
+              quitarlo, o si dejas de compartir, la copia de ese celular se
+              borra la siguiente vez que abre la app con internet.
             </li>
             <li>
               <strong>Chat de soporte.</strong> Si nos escribes desde la app, el
@@ -138,6 +150,12 @@ export default function Privacidad() {
             Desinstalar Lávale o borrar los datos de la app elimina el registro
             local, pero no el respaldo en la nube si lo habías encendido. Tampoco
             cancela la suscripción: se administra desde Google Play o App Store.
+          </p>
+          <p>
+            Si tu celular está unido a la lavandería de otra persona, «Salir de
+            esta lavandería» en Ajustes → «Varios celulares» borra la copia de
+            tu celular. Los datos de la lavandería son de su dueño: para
+            cualquier solicitud sobre ellos, acude a él.
           </p>
 
           <h2>7. Cambios a este aviso</h2>

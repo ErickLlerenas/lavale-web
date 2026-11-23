@@ -114,7 +114,7 @@ const planBenefits = [
 const faqs = [
   {
     q: "¿Necesito internet?",
-    a: "Recibes, cobras y entregas sin conexión. Necesitas internet para activar o renovar la suscripción, enviar WhatsApp y usar el chat de soporte.",
+    a: "Recibes, cobras y entregas sin conexión. Necesitas internet para activar o renovar la suscripción, enviar WhatsApp y usar el chat de soporte. Si la usan varios celulares, también para guardar.",
   },
   {
     q: "¿Necesito impresora?",
@@ -122,11 +122,15 @@ const faqs = [
   },
   {
     q: "¿Dónde quedan mis datos?",
-    a: "En tu teléfono. Los pedidos, clientes y cortes no se sincronizan con otros dispositivos. Si desinstalas la app o borras sus datos, puedes perder ese registro.",
+    a: "En tu teléfono. Si quieres, enciendes el respaldo en la nube para recuperarlos cuando cambies de celular.",
+  },
+  {
+    q: "¿La pueden usar mis empleados?",
+    a: "Sí. Les das un código y trabajan en la misma lavandería desde su celular: mismos pedidos y misma caja. Hasta 5 celulares, sin pagar más. Sucursales todavía no.",
   },
   {
     q: "¿Funciona en Android y iPhone?",
-    a: "Sí, en los dos. Por ahora funciona en un solo equipo por lavandería; no sincroniza entre sucursales.",
+    a: "Sí, en los dos, y se pueden mezclar en la misma lavandería.",
   },
   {
     q: "¿Cuánto cuesta?",
