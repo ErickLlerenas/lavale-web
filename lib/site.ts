@@ -1,6 +1,4 @@
 /// Una sola fuente para marca, tiendas y precios de la landing.
-/// Cuando la app esté publicada, llena `stores` y los botones de descarga
-/// aparecen solos en lugar de "Próximamente".
 
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://lavaleapp.vercel.app";
@@ -13,13 +11,11 @@ export const siteTitle = "Lávale · Control para lavanderías en México";
 export const siteDescription =
   "Lávale es la app para lavanderías: folio para cada bolsa, aviso por WhatsApp cuando la ropa está lista y corte de caja. Funciona sin internet y sin crear cuenta.";
 
-/// `null` mientras la app no esté publicada en esa tienda.
-export const stores: { google: string | null; apple: string | null } = {
-  google: null,
+/// Fichas públicas de la app en cada tienda.
+export const stores = {
+  google: "https://play.google.com/store/apps/details?id=mx.ejele.lavale",
   apple: "https://apps.apple.com/mx/app/id6819459731",
-};
-
-export const isPublished = Boolean(stores.google || stores.apple);
+} as const;
 
 /// Public backend configuration used by the private administration page.
 export const publicApi = {

@@ -27,36 +27,25 @@ const badges = [
   { key: "apple", href: stores.apple, store: "App Store", Logo: AppleLogo },
 ] as const;
 
-/// Botones de descarga. Mientras una tienda no tenga enlace en
-/// `lib/site.ts`, su botón se muestra como «Próximamente» y no navega.
+/// Botones de descarga. Los enlaces viven en `lib/site.ts`.
 export default function GetApp({ align = "start" }: { align?: "start" | "center" }) {
   return (
     <div className={`get-app get-app-${align}`}>
-      {badges.map(({ key, href, store, Logo }) =>
-        href ? (
-          <a
-            key={key}
-            className="store-badge"
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Logo />
-            <span>
-              <small>Descárgala en</small>
-              {store}
-            </span>
-          </a>
-        ) : (
-          <span key={key} className="store-badge is-soon" aria-disabled="true">
-            <Logo />
-            <span>
-              <small>Próximamente en</small>
-              {store}
-            </span>
+      {badges.map(({ key, href, store, Logo }) => (
+        <a
+          key={key}
+          className="store-badge"
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Logo />
+          <span>
+            <small>Descárgala en</small>
+            {store}
           </span>
-        ),
-      )}
+        </a>
+      ))}
     </div>
   );
 }

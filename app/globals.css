@@ -693,12 +693,6 @@ a.store-badge:hover {
   letter-spacing: 0.01em;
   opacity: 0.8;
 }
-.store-badge.is-soon {
-  background: rgba(4, 40, 37, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: none;
-  cursor: default;
-}
 
 /* ---------- Antes / después ---------- */
 .compare-section {

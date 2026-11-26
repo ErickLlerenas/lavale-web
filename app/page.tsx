@@ -146,6 +146,7 @@ function jsonLd() {
     applicationCategory: "BusinessApplication",
     operatingSystem: "Android, iOS",
     url: siteUrl,
+    sameAs: [stores.google, stores.apple],
     description: siteDescription,
     offers: [
       { "@type": "Offer", price: plans.monthly, priceCurrency: "MXN" },
